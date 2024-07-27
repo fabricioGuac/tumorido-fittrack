@@ -1,0 +1,22 @@
+{
+  "name": "tumorido-fittrack",
+  "version": "1.0.0",
+  "description": "Full-stack application leveraging the MERN stack (MongoDB, Express.js, React, Node.js) to create a comprehensive fit tracking app.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "build": "cd client && npm run build",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
+    "render-build":"npm install && npm run build"
+  },
+  "keywords": [
+    "garpql, mern, mongo, experss, react, node, jwt"
+  ],
+  "author": "Fabricio Guacuto",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
