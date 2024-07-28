@@ -1,5 +1,5 @@
 // Imports the error from GraphQL and jwt dependency
-const { GrapQLError } = require('graphql');
+const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
 
 // Gets the secret from the enviromental variables and defines the expiration of the jwt
@@ -43,8 +43,8 @@ module.exports = {
         return req;
     },
 
-    signToken: function ({ email, name, _id }) {
-        const payload = { email, name, _id };
+    signToken: function ({ email, username, _id }) {
+        const payload = { email, username, _id };
         // Sign the payload with the secret key and set an expiration time for the token
         return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
     },
