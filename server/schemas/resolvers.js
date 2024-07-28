@@ -4,18 +4,19 @@ const {signToken, AuthError} = require('../utils/auth');
 const resolvers = {
     Query: {
         me: async (parent, arg, context) => {
+            console.log(context.user)
             return `PLACEHOLDER`;
         }
     },
 
     Mutation : {
         // Mutation to create a new user
-        createUser: async (parent, {username, email, password}) => {
+        createUser: async (parent, {username, email, password}, context) => {
                 // Creates a new user
                 const user = await User.create({ username, email, password });
         
                 // Creates a jwt token for the new user
-                const token = signToken(newUser);
+                const token = signToken(user);
         
                 // Returns the token and new user object
                 return { token, user };

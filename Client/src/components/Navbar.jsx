@@ -24,7 +24,7 @@ export default function Nav() {
                 <li className='nav-item'>
                     <button
                         className='nav-link btn btn-danger'
-                        onClick={handleLogout}>
+                        onClick={Auth.logout}>
                         Logout
                     </button>
                 </li>

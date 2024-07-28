@@ -17,6 +17,7 @@ const userSchema = new Schema(
         password: {
             type: String,
             required: true,
+            match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Password must be at least 8 characters long and contain at least one number, one uppercase letter, one lowercase letter, and one special character']
         },
         // Add fields for workouts? || excercise? || progress?
         // Add fields for user metrics 

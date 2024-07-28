@@ -10,7 +10,7 @@ import { ADD_USER } from '../utils/mutations';
 export default function Signin() {
     // State variables for form data and error messages
     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
-    const [errorMessages, setErrorMessages] = useState({ email: '', password: '' });
+    const [errorMessages, setErrorMessages] = useState({ email: '', password: '', username: '' });
 
     const [createUser, { error }] = useMutation(ADD_USER);
 
@@ -25,10 +25,29 @@ export default function Signin() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Check with regex
+        // Check with the email with regex
         const emailError = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userFormData.email) ? '' : 'Must be a valid email';
-        const passwordError = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(userFormData.password) ? '' : 'Password must be at least 8 characters long and contain at least one number, one uppercase letter, one lowercase letter, and one special character';
 
+        // Check with regex for each password requirement
+        const hasMinLength = userFormData.password.length >= 8;
+        const hasUppercase = /[A-Z]/.test(userFormData.password);
+        const hasLowercase = /[a-z]/.test(userFormData.password);
+        const hasNumber = /\d/.test(userFormData.password);
+        const hasSpecialChar = /[@$!%*?&]/.test(userFormData.password);
+
+        // Construct specific error messages based on each requirement
+        let passwordError = '';
+        if (!hasMinLength) {
+            passwordError = 'Password must be at least 8 characters long';
+        } else if (!hasUppercase) {
+            passwordError = 'Password must contain at least one uppercase letter';
+        } else if (!hasLowercase) {
+            passwordError = 'Password must contain at least one lowercase letter';
+        } else if (!hasNumber) {
+            passwordError = 'Password must contain at least one number';
+        } else if (!hasSpecialChar) {
+            passwordError = 'Password must contain at least one special character (@$!%*?&)';
+        }
         // Set the error messages if any
         setErrorMessages({ email: emailError, password: passwordError });
 
@@ -45,9 +64,20 @@ export default function Signin() {
             });
 
             console.log(data);
-            Auth.login(data.login.token);
+            Auth.login(data.createUser.token);
         } catch (err) {
-            console.error(err);
+            if (err.message.includes('duplicate key') && err.message.includes('username')) {
+                // Handles duplicate username error
+                setErrorMessages({ username: `Username already taken try: ${userFormData.username} ${Math.floor(Math.random() * 999) + 1} `});
+                console.error('An error occurred:', err.message, err);
+            } else if (err.message.includes('duplicate key') && err.message.includes('email')) {
+                // Handles duplicate email error
+                setErrorMessages({ email: 'Email already taken' });
+                console.error('An error occurred:', err.message);
+            } else {
+                // Handles edge cases
+                console.log('Full error:', err);
+            }
         }
 
         setUserFormData({
@@ -72,8 +102,8 @@ export default function Signin() {
                         placeholder="Your username"
                         value={userFormData.username}
                         onChange={handleInputChange}
-                        required
                     />
+                    {errorMessages.username && <div className='text-danger'>{errorMessages.username}</div>}
                 </div>
 
                 <div className="mb-3">
