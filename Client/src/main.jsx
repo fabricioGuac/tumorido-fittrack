@@ -4,11 +4,13 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // Imports the components
-import App from './App.jsx'
+import App from './App.jsx';
+import Login from './pages/LogIn.jsx';
+import Signin from './pages/SignIn.jsx';
 
 // Imports the styles
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 
 // Defines the routes to wich the components will render
 const router = createBrowserRouter([
@@ -17,20 +19,21 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <h1 className='display-2'>Wrong page!</h1>,
     children: [
-      // {
-      //   index: true,
-      //   element: </>
-      // }, {
-      //   path: '/idk',
-      //   element: < />
-      // }
+      {
+        index: true,
+        element: <h1 className='display-2'>main</h1>
+      }, {
+        path: '/login',
+        element: < Login />
+      }, {
+        path: '/Signin',
+        element: < Signin />
+      },
     ]
   }
-])
+]);
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
 )

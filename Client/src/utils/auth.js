@@ -1,5 +1,5 @@
 // // Imports the decode function from the jwt-decode library
-import decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 // Defines the AuthService class for handling authentication related functions
 class AuthService {
@@ -16,7 +16,7 @@ class AuthService {
     isTokenExpired(token) {
         try {
             // Decodes the token
-            const decoded = decode(token);
+            const decoded = jwtDecode(token);
             // Compares the token expiration date in seconds with the current time in seconds
             if (decoded.exp < Date.now() / 1000) {
                 return true;
