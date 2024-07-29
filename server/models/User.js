@@ -1,7 +1,5 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
-const body = require('./Body');
-const lift = require('./Lift');
 
 const userSchema = new Schema(
     {
@@ -23,8 +21,11 @@ const userSchema = new Schema(
             required: true,
             match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Password must be at least 8 characters long and contain at least one number, one uppercase letter, one lowercase letter, and one special character']
         },
-        body:[body],
-        lift:[lift],
+        height: {
+            type: Number,
+        },
+        body: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Body' }],
+        lift: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lift' }],
     },
     {
         toJSON: {
