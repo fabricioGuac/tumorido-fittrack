@@ -29,13 +29,15 @@ export default function Nav() {
                             Logout
                         </button>
                     </li>
-                    <li className='nav-item'>
-                        <Link
-                            to="/profile"
-                            className='nav-link'>
-                            Profile
-                        </Link>
-                    </li>
+                    {currentPg !== '/profile' && (
+                        <li className='nav-item'>
+                            <Link
+                                to="/profile"
+                                className='nav-link'>
+                                Profile
+                            </Link>
+                        </li>
+                    )}
                 </>
             ) : (
                 <>

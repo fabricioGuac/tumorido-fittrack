@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const body = require('./Body');
+const lift = require('./Lift');
 
 const userSchema = new Schema(
     {
@@ -7,6 +9,8 @@ const userSchema = new Schema(
             type: String,
             required: true,
             unique: true,
+            trim: true,
+            maxlength: 50
         },
         email: {
             type: String,
@@ -19,8 +23,8 @@ const userSchema = new Schema(
             required: true,
             match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Password must be at least 8 characters long and contain at least one number, one uppercase letter, one lowercase letter, and one special character']
         },
-        // Add fields for workouts? || excercise? || progress?
-        // Add fields for user metrics 
+        body:[body],
+        lift:[lift],
     },
     {
         toJSON: {
@@ -42,8 +46,6 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
-
-// Virtuals for bmi, ffmi, bf%, calReq???
 
 const User = model('user', userSchema);
 

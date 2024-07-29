@@ -28,6 +28,9 @@ export default function Signin() {
         // Check with the email with regex
         const emailError = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userFormData.email) ? '' : 'Must be a valid email';
 
+        // Check that the username lenght
+        const usernameError = userFormData.length > 50 ? '' : 'Username must be under 50 characters long'
+
         // Check with regex for each password requirement
         const hasMinLength = userFormData.password.length >= 8;
         const hasUppercase = /[A-Z]/.test(userFormData.password);
@@ -49,7 +52,7 @@ export default function Signin() {
             passwordError = 'Password must contain at least one special character (@$!%*?&)';
         }
         // Set the error messages if any
-        setErrorMessages({ email: emailError, password: passwordError });
+        setErrorMessages({ email: emailError, password: passwordError, username: usernameError });
 
         if (emailError || passwordError) {
             // Stop the form submission if validation fails
