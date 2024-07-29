@@ -7,6 +7,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.jsx';
 import Login from './pages/LogIn.jsx';
 import Signin from './pages/SignIn.jsx';
+import Homepage from './pages/Homepage.jsx';
+import Profile from './pages/Profile.jsx';
 
 // Imports the styles
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,13 +23,16 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <h1 className='display-2'>main</h1>
+        element: <Homepage />
       }, {
         path: '/login',
         element: < Login />
       }, {
-        path: '/Signin',
+        path: '/signin',
         element: < Signin />
+      },{
+        path: '/profile',
+        element: < Profile />
       },
     ]
   }

@@ -15,19 +15,28 @@ export default function Nav() {
                     <Link
                         to="/"
                         className='nav-link'>
-                        Placeholder
+                        Homepage
                     </Link>
                 </li>
             )}
-             {/* Conditional rendering for authenticated and unauthenticated users */}
+            {/* Conditional rendering for authenticated and unauthenticated users */}
             {Auth.loggedIn() ? (
-                <li className='nav-item'>
-                    <button
-                        className='nav-link btn btn-danger'
-                        onClick={Auth.logout}>
-                        Logout
-                    </button>
-                </li>
+                <>
+                    <li className='nav-item'>
+                        <button
+                            className='nav-link btn btn-danger'
+                            onClick={Auth.logout}>
+                            Logout
+                        </button>
+                    </li>
+                    <li className='nav-item'>
+                        <Link
+                            to="/profile"
+                            className='nav-link'>
+                            Profile
+                        </Link>
+                    </li>
+                </>
             ) : (
                 <>
                     {currentPg !== '/login' && (

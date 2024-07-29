@@ -13,7 +13,7 @@ type Auth {
 }
 
 type Query {
-    me: String!
+    me: User!
 }
 
 type Mutation {
