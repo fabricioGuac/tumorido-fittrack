@@ -48,59 +48,64 @@ const resolvers = {
             // Returns the token and the logged user object
             return { token, user }
         },
-        // // Mutation to introduce body data
-        // addBody: async (parent, { weight, bodyFatPercentage, height }, context) => {
+        // Mutation to introduce body data
+        addBody: async (parent, { weight, bodyFatPercentage, height }, context) => {
 
-        //     // If the context does not have an user object throws an autentication error
-        //     if (!context.user) {
-        //         throw AuthError
-        //     }
+            // If the context does not have an user object throws an autentication error
+            if (!context.user) {
+                throw AuthError
+            }
 
-        //     // Creates a new body with the input data
-        //     const body = await Body.create({ userId: context.user._id, weight, bodyFatPercentage });
+            // Creates a new body with the input data
+            const body = await Body.create({ userId: context.user._id, weight, bodyFatPercentage });
 
-        //     // Updates the user 
-        //     const user = await User.findOneAndUpdate({ _id: context.user._id },
-        //         {
-        //             // Adds the id of the new body to the body ids array
-        //             $addToSet: { body: body._id },
-        //             // Updates the height
-        //             $set: { height: height },
-        //         },
-        //         { new: true, runValidators: true },
-        //     );
+            // Updates the user 
+            const user = await User.findOneAndUpdate({ _id: context.user._id },
+                {
+                    // Adds the id of the new body to the body ids array
+                    $addToSet: { body: body._id },
+                    // Updates the height
+                    $set: { height: height },
+                },
+                { new: true, runValidators: true },
+            );
 
-        //     // If the user update fails throws an authentication error
-        //     if (!user) {
-        //         throw AuthError;
-        //     }
+            // If the user update fails throws an authentication error
+            if (!user) {
+                throw AuthError;
+            }
 
-        //     // Returns the modified user object
-        //     return user;
-        // },
-        // // Mutation to introduce a lift data
-        // addLift: async (parent, { exercise, sets }, context) => {
+            // Returns the modified user object
+            return user;
+        },
+        // Mutation to introduce a lift data
+        addLift: async (parent, { exercise, sets }, context) => {
 
-        //     // If the context does not have an user object throws an autentication error
-        //     if (!context.user) {
-        //         throw AuthError
-        //     }
+            // If the context does not have an user object throws an autentication error
+            if (!context.user) {
+                throw AuthError
+            }
 
-        //     // Creates a new lift with the input data
-        //     const lift = await Lift.create({ userId: context.user._id, exercise, sets });
+            // Creates a new lift with the input data
+            const lift = await Lift.create({ userId: context.user._id, exercise, sets });
 
-        //     // Updates the user 
-        //     const user = await User.findOneAndUpdate({ _id: context.user._id },
-        //         {
-        //             // Adds the id of the new lift to the lift ids array
-        //             $addToSet: {lift: lift._id },
-        //         },
-        //         { new: true, runValidators: true },
-        //     );
+            // Updates the user 
+            const user = await User.findOneAndUpdate({ _id: context.user._id },
+                {
+                    // Adds the id of the new lift to the lift ids array
+                    $addToSet: {lift: lift._id },
+                },
+                { new: true, runValidators: true },
+            );
 
-        //     // Returns the modifies user
-        //     return user;
-        // }
+            // If the user update fails throws an authentication error
+            if (!user) {
+                throw AuthError;
+            }
+
+            // Returns the modifies user
+            return user;
+        }
     }
 }
 

@@ -8,10 +8,11 @@ import { LOGIN_USER } from '../utils/mutations';
 
 
 export default function Login() {
-
+    
     // Sets state variable for the form 
     const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
-
+    const [errorMessage, setErrorMessage] = useState('');
+    
 
     const [loginUser, { error }] = useMutation(LOGIN_USER);
 
@@ -37,7 +38,7 @@ export default function Login() {
             Auth.login(data.login.token);
         } catch (err) {
             console.log(err.message);
-            // Show it in a modale
+            setErrorMessage(err.message)
         }
 
         setUserFormData({
@@ -87,6 +88,7 @@ export default function Login() {
                     Sign In
                 </button>
             </form>
+            {errorMessage && <div className='text-danger'>{errorMessage}</div>}
         </div>
     )
 }

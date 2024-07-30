@@ -11,7 +11,6 @@ export const LOGIN_USER = gql`
             }
         }
     }
-
 `;
 
 export const ADD_USER = gql`
@@ -24,5 +23,23 @@ export const ADD_USER = gql`
         }
     }
 }
+`;
 
+
+export const ADD_BODY = gql`
+    mutation addBody($weight: Float!, $bodyFatPercentage: Float!, $height: Int!){
+    addBody(weight: $weight, bodyFatPercentage: $bodyFatPercentage , height: $height ){
+        username
+        body
+    }
+}
+`
+
+export const ADD_LIFT = gql`
+    mutation addLift($exercise: String!, $sets: [SetInput!]!){
+        addLift(exercise: $exercise, sets: $sets){
+            username
+            lift 
+        }
+    }
 `;

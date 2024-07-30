@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 
 import { useMutation } from '@apollo/client';
 
+import {ADD_LIFT} from '../utils/mutations';
+
 export default function LiftForm() {
     const [exercise, setExercise] = useState('');
     const [sets, setSets] = useState([{ reps: '', weight: '' }]);
     const [units, setUnits] = useState('lbs');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const [addLift, {error}] = useMutation(ADD_LIFT);
 
     const handleAddSet = () => {
         setSets([...sets, { reps: '', weight: '' }]);
@@ -39,7 +43,7 @@ export default function LiftForm() {
     }
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if(!exercise){
@@ -67,13 +71,24 @@ export default function LiftForm() {
             return;
         }
 
-
-        setSets([{ reps: '', weight: '' }]);
-        setExercise('');
-        setErrorMessage('');
-
-        // Use addLift mutation
+        
         console.log(formData);
+        try {
+            const {data} = await addLift({
+                variables: formData
+            })
+
+            console.log(data.addLift.lift);
+
+            setSets([{ reps: '', weight: '' }]);
+            setExercise('');
+            setErrorMessage('');
+
+            // Relocate to a graph of the lift over time??
+        } catch (err) {
+            console.log(err.message);
+            setErrorMessage(err.message);
+        }
     };
 
     return (
