@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-// import { BodyForm } from '../components/BodyForm';
+import  BodyForm  from '../components/BodyForm';
 import  LiftForm  from '../components/LiftForm';
 
 import { useQuery } from "@apollo/client";
@@ -35,6 +35,6 @@ export default function Profile() {
     return (<>
     <h2>{data.me.username}</h2>
     <LiftForm />
-
+    <BodyForm />
     </>)
 }
