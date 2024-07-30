@@ -4,6 +4,8 @@ type User {
     _id: ID!
     username: String!
     email:String!
+    body: [ID]
+    lift: [ID]
     }
 
 

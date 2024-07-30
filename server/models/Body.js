@@ -4,7 +4,7 @@ const { Schema, model } = require('mongoose');
 const BodySchema = new Schema (
     {
         userId: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User',
             required: true
         },

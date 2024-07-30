@@ -24,8 +24,8 @@ const userSchema = new Schema(
         height: {
             type: Number,
         },
-        body: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Body' }],
-        lift: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lift' }],
+        body: [{ type: Schema.Types.ObjectId, ref: 'Body' }],
+        lift: [{ type: Schema.Types.ObjectId, ref: 'Lift' }],
     },
     {
         toJSON: {
