@@ -1,8 +1,25 @@
 
 const typeDefs = `
+scalar Date
+
 input SetInput {
     reps: Float!
     weight: Float!
+}
+
+type Lift {
+    _id: ID!
+    exercise: String!
+    date: Date!
+    sets: [SetInput!]!
+    totalWeightLifted: Float!
+}
+
+type Body {
+    _id: ID!
+    date: Date!
+    weight: Float
+    bodyFatPercentage: Float!
 }
 
 type User {

@@ -10,7 +10,10 @@ const BodySchema = new Schema (
         },
         date: {
             type: Date, 
-            default: Date.now
+            default: Date.now,
+            get: function (date) {
+                return date.toLocaleDateString();
+            }
         },
         weight: {
             type: Number,
@@ -23,7 +26,7 @@ const BodySchema = new Schema (
     },
 {
     toJSON: {
-        virtuals: true,
+        getters: true,
     },
 })
 

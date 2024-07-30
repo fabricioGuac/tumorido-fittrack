@@ -1,14 +1,18 @@
-const { Schema, model, default: mongoose } = require('mongoose');
+const { Schema, model, } = require('mongoose');
 
-const liftSchema = new Schema (
+const liftSchema = new Schema(
     {
-        userId: {type: mongoose.Schema.ObjectId,
-                ref: 'User',
-                required: true,
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
         },
         date: {
             type: Date,
             default: Date.now,
+            get: function (date) {
+                return date.toLocaleDateString();
+            }
         },
         exercise: {
             type: String,
@@ -22,7 +26,7 @@ const liftSchema = new Schema (
                     type: Number,
                     required: true,
                 },
-                weight:{
+                weight: {
                     type: Number,
                     required: true,
                 },
@@ -32,12 +36,13 @@ const liftSchema = new Schema (
 
     {
         toJSON: {
-            virtuals: true,
+            getters: true,
         },
+        id: false,
 });
 
 // Virtual field to calculate the total weight lifted for exercise session
-liftSchema.virtual('totalWeightLifted').get(function(){
+liftSchema.virtual('totalWeightLifted').get(function () {
     return this.sets.reduce((total, set) => total + (set.weight * set.reps), 0);
 });
 
