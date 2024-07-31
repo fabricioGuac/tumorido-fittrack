@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import ExerciseCard from '../components/ExerciseCard'
 
 import { useLazyQuery } from "@apollo/client";
 
@@ -6,32 +8,34 @@ import { GET_EXERCISE_BY_NAME, GET_EXERCISE_BY_MUSCLE } from '../utils/queries'
 
 export default function Exercises() {
     // State to keep track of the active muscle
-    const [activeMuscle, setActiveMuscle] = useState('');
+    const [activeMuscle, setActiveMuscle] = useState('Chest');
     // State to handle the searchbar exercise
     const [exercise, setExercise] = useState('');
+    // State to keep track of the active query
+    const [activeQuery, setActiveQuery] = useState('muscle')
 
     // lazyQueries execute based on events
     const [getExercisesByMuscle, { loading, data }] = useLazyQuery(GET_EXERCISE_BY_MUSCLE);
     const [getExercisesByName, { loading: nameLoading, data: nameData }] = useLazyQuery(GET_EXERCISE_BY_NAME);
 
 
-    const muscles = ['Chest', 'Quadriceps','Hamstrings', 'Back', 'Shoulders', 'Biceps', 'Triceps'];
+    const muscles = ['Chest', 'Quadriceps', 'Hamstrings', 'Back', 'Shoulders', 'Biceps', 'Triceps'];
 
-    const buttonHandler = async (e) => {
-        const { name } = e.target;
-        try {
-            setActiveMuscle(name)
+    // When activeMucle state changes perform the query
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await getExercisesByMuscle({
+                    variables: { muscle: activeMuscle }
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        };
 
-            await getExercisesByMuscle({
-                variables: { muscle: activeMuscle }
-            })
+        fetchData();
+    }, [activeMuscle]);
 
-            console.log(data);
-            console.log(name);
-        } catch (err) {
-            console.log(err);
-        }
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,18 +45,18 @@ export default function Exercises() {
                 variables: { name: exercise }
             })
 
-            console.log(nameData);
-            console.log(exercise);
+            setActiveQuery('name');
         } catch (err) {
             console.log(err);
         }
     }
 
+
     if (loading || nameLoading) {
         return (
-        <div className="d-flex justify-content-center align-items-center vh-100">
-            <h2 className="text-primary">Loading...</h2>
-        </div>)
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                <h2 className="text-primary">Loading...</h2>
+            </div>)
     }
 
     return (
@@ -67,7 +71,10 @@ export default function Exercises() {
                                 type="button"
                                 name={muscle}
                                 className={`btn ${activeMuscle === muscle ? 'btn-primary' : 'btn-secondary'}`}
-                                onClick={buttonHandler}
+                                onClick={() => {
+                                    setActiveMuscle(muscle);
+                                    setActiveQuery('muscle');
+                                }}
                             >
                                 {muscle}
                             </button>
@@ -92,7 +99,14 @@ export default function Exercises() {
                         </form>
                     </div>
                 </div>
+            {activeQuery === 'muscle' && data?.getExerciseByMuscle && (
+                <ExerciseCard exercises={data.getExerciseByMuscle} />
+            )}
+            {activeQuery === 'name' && nameData?.getExerciseByName && (
+                <ExerciseCard exercises={nameData.getExerciseByName} />
+            )}
             </div>
+            
         </>
     );
 }

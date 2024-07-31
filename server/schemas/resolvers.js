@@ -1,6 +1,6 @@
 const { User, Body, Lift } = require('../models');
 const { signToken, AuthError } = require('../utils/auth');
-const  dateScalar  = require('./scalars');
+const dateScalar = require('./scalars');
 
 const resolvers = {
     Date: dateScalar,
@@ -13,33 +13,88 @@ const resolvers = {
             throw AuthError;
         },
 
-        
-        // Mutation to make an query exercises by name to an api
-        getExerciseByName: async (parent, {name}) => {
 
-            // Makes the api call
-            const response = await fetch(`https://api.api-ninjas.com/v1/exercises?name=${name}`, {
-                    method: 'GET',
-                    headers: {
-                        'X-Api-Key': process.env.EXERCISE_API_KEY,
-                        'Content-Type': 'application/json'
-                    }});
-            // returns the response data
-            return response.json()
+        // Query to make an query exercises by name to an api
+        getExerciseByName: async (parent, { name }) => {
+
+            // // Makes the api call
+            // const response = await fetch(`https://api.api-ninjas.com/v1/exercises?name=${name}`, {
+            //         method: 'GET',
+            //         headers: {
+            //             'X-Api-Key': process.env.EXERCISE_API_KEY,
+            //             'Content-Type': 'application/json'
+            //         }});
+            // // returns the response data
+            // return response.json();
+            return [
+                {
+                    "name": "GET EXERCISE BY NAME1",
+                    "type": "NAME",
+                    "muscle": "GET EXERCISE BY NAME",
+                    "equipment": "GET EXERCISE BY NAME",
+                    "difficulty": "GET EXERCISE BY NAME",
+                    "instructions": "PLACEHOLDER TO SEE IF BOTH QUERY RESULTS WILL RENDER AT THE SAME TIME."
+                },
+                {
+                    "name": "GET EXERCISE BY NAME2",
+                    "type": "NAME",
+                    "muscle": "GET EXERCISE BY NAME",
+                    "equipment": "GET EXERCISE BY NAME",
+                    "difficulty": "GET EXERCISE BY NAME",
+                    "instructions": "PLACEHOLDER TO SEE IF BOTH QUERY RESULTS WILL RENDER AT THE SAME TIME."
+                },
+                {
+                    "name": "GET EXERCISE BY NAME3",
+                    "type": "NAME",
+                    "muscle": "GET EXERCISE BY NAME",
+                    "equipment": "GET EXERCISE BY NAME",
+                    "difficulty": "GET EXERCISE BY NAME",
+                    "instructions": "PLACEHOLDER TO SEE IF BOTH QUERY RESULTS WILL RENDER AT THE SAME TIME."
+                },
+            ]
+
 
         },
-        // Mutation to make an query exercises by muscle to an api
-        getExerciseByMuscle: async (parent, {muscle},) => {
+        // Query to make an query exercises by muscle to an api
+        getExerciseByMuscle: async (parent, { muscle },) => {
 
-            // Makes the api call
-            const response = await fetch(`https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`, {
-                method: 'GET',
-                headers: {
-                    'X-Api-Key': process.env.EXERCISE_API_KEY,
-                    'Content-Type': 'application/json'
-                }});
-        // returns the response data
-        return response.json()
+            //     // Makes the api call
+            //     const response = await fetch(`https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`, {
+            //         method: 'GET',
+            //         headers: {
+            //             'X-Api-Key': process.env.EXERCISE_API_KEY,
+            //             'Content-Type': 'application/json'
+            //         }});
+            // // returns the response data
+            // return response.json();
+
+            return [
+                {
+                    "name": "GET EXERCISE BY MUSCLE1",
+                    "type": "MUSCLE",
+                    "muscle": "GET EXERCISE BY MUSCLE",
+                    "equipment": "GET EXERCISE BY MUCLE",
+                    "difficulty": "GET EXERCISE BY MUCLE",
+                    "instructions": "PLACEHOLDER TO SEE IF BOTH QUERY RESULTS WILL RENDER AT THE SAME TIME."
+                },
+                {
+                    "name": "GET EXERCISE BY MUSCLE2",
+                    "type": "MUSCLE",
+                    "muscle": "GET EXERCISE BY MUSCLE",
+                    "equipment": "GET EXERCISE BY MUCLE",
+                    "difficulty": "GET EXERCISE BY MUCLE",
+                    "instructions": "PLACEHOLDER TO SEE IF BOTH QUERY RESULTS WILL RENDER AT THE SAME TIME."
+                },
+                {
+                    "name": "GET EXERCISE BY MUSCLE3",
+                    "type": "MUSCLE",
+                    "muscle": "GET EXERCISE BY MUSCLE",
+                    "equipment": "GET EXERCISE BY MUCLE",
+                    "difficulty": "GET EXERCISE BY MUCLE",
+                    "instructions": "PLACEHOLDER TO SEE IF BOTH QUERY RESULTS WILL RENDER AT THE SAME TIME."
+                },
+            ]
+
         }
     },
 
@@ -124,7 +179,7 @@ const resolvers = {
             const user = await User.findOneAndUpdate({ _id: context.user._id },
                 {
                     // Adds the id of the new lift to the lift ids array
-                    $addToSet: {lift: lift._id },
+                    $addToSet: { lift: lift._id },
                 },
                 { new: true, runValidators: true },
             );
