@@ -9,6 +9,7 @@ import Login from './pages/LogIn.jsx';
 import Signin from './pages/SignIn.jsx';
 import Homepage from './pages/Homepage.jsx';
 import Profile from './pages/Profile.jsx';
+import Exercises from './pages/Exercises.jsx';
 
 // Imports the styles
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -33,6 +34,9 @@ const router = createBrowserRouter([
       },{
         path: '/profile',
         element: < Profile />
+      },{
+        path: '/exercises',
+        element: < Exercises />
       },
     ]
   }

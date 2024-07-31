@@ -2,7 +2,6 @@ import { Link, useLocation } from 'react-router-dom';
 
 import Auth from '../utils/auth';
 
-
 export default function Nav() {
     // Retrieves the current page location pathname using useLocation() hook
     const currentPg = useLocation().pathname;
@@ -16,6 +15,15 @@ export default function Nav() {
                         to="/"
                         className='nav-link'>
                         Homepage
+                    </Link>
+                </li>
+            )}
+            {currentPg !== '/exercises' && (
+                <li className='nav-item'>
+                    <Link
+                        to="/exercises"
+                        className='nav-link'>
+                        Exercises
                     </Link>
                 </li>
             )}

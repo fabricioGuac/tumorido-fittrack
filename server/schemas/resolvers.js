@@ -12,6 +12,35 @@ const resolvers = {
             }
             throw AuthError;
         },
+
+        
+        // Mutation to make an query exercises by name to an api
+        getExerciseByName: async (parent, {name}) => {
+
+            // Makes the api call
+            const response = await fetch(`https://api.api-ninjas.com/v1/exercises?name=${name}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Api-Key': process.env.EXERCISE_API_KEY,
+                        'Content-Type': 'application/json'
+                    }});
+            // returns the response data
+            return response.json()
+
+        },
+        // Mutation to make an query exercises by muscle to an api
+        getExerciseByMuscle: async (parent, {muscle},) => {
+
+            // Makes the api call
+            const response = await fetch(`https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`, {
+                method: 'GET',
+                headers: {
+                    'X-Api-Key': process.env.EXERCISE_API_KEY,
+                    'Content-Type': 'application/json'
+                }});
+        // returns the response data
+        return response.json()
+        }
     },
 
     Mutation: {

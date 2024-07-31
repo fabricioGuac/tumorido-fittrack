@@ -7,6 +7,15 @@ input SetInput {
     weight: Float!
 }
 
+type Exercise {
+    name: String
+    type: String
+    muscle: String
+    equipment: String
+    difficulty: String
+    instructions: String
+}
+
 type Set {
     reps: Float!
     weight: Float!
@@ -44,6 +53,8 @@ type Auth {
 
 type Query {
     me: User
+    getExerciseByName(name:String!): [Exercise]
+    getExerciseByMuscle(muscle:String!): [Exercise]
 }
 
 type Mutation {
