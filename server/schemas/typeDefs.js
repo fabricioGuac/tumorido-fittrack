@@ -1,19 +1,23 @@
 
-// type Lift {
-//     _id: ID!
-//     exercise: String!
-//     date: Date!
-//     sets: [SetInput!]!
-//     totalWeightLifted: Float!
-// }
-
-
 const typeDefs = `
 scalar Date
 
 input SetInput {
     reps: Float!
     weight: Float!
+}
+
+type Set {
+    reps: Float!
+    weight: Float!
+}
+
+type Lift {
+    _id: ID!
+    exercise: String!
+    date: Date!
+    sets: [Set!]!
+    totalWeightLifted: Float!
 }
 
 

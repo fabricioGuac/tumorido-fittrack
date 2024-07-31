@@ -11,6 +11,12 @@ export default function BodyForm() {
     // State variables
     const [radios, setRadios] = useState({ sex: 'Male', measureUnit: 'cm', massUnit: 'kg' })
     const [form, setForm] = useState({ height: '', weight: '', neck: '', abdomen: '', waist: '' });
+    const [errorMessage, setErrorMessage] = useState('');
+
+    // Mutation to add body metrics
+    const [addBody, {error}] = useMutation(ADD_BODY);
+
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -33,7 +39,7 @@ export default function BodyForm() {
     // Converter functions to parse the imperial system to metric
     function heightToCm(height) {
         if (radios.measureUnit === 'cm') {
-            return height
+            return parseFloat(height);
         }
 
         // Splits the input by anything but a number
@@ -88,20 +94,56 @@ export default function BodyForm() {
 
         console.log(`Height: ${cmHeight}cm  Weight: ${kgWeight}kg  Neck: ${cmNeck}cm Abdomen: ${cmAbs}cm  Waist: ${cmWaist}cm`);
 
+        // Conditional to ensure all the input data are numbers
+        if(isNaN(cmHeight) || isNaN(cmAbs) || isNaN(kgWeight) || isNaN(cmNeck) || isNaN(cmWaist)){
+            setErrorMessage('Please make sure the input data are numbers');
+            return;
+        }
+
+        // Conditionals to ensure the fields are completed
+        if(!form.height){
+            setErrorMessage('Please make sure to fill your height');
+        }
+        if(!form.weight){
+            setErrorMessage('Please make sure to fill your weight');
+        }
+        if(!form.neck){
+            setErrorMessage('Please make sure to fill your neck measurements');
+        }
+        if(!form.abdomen){
+            setErrorMessage('Please make sure to fill your abdominal measurements');
+        }
+        if(radios.sex === 'Female' && !form.waist){
+            setErrorMessage('Please make sure to fill your waist measurements');
+        }
+        
+
         // Ensures that the values are valid for the formula
         if (cmAbs <= cmNeck || cmHeight <= 0 || (cmWaist < 0 && radios.sex === 'Female')) {
-            // Add to error message
-            return 'Invalid input';
+            // Show the error message
+            setErrorMessage('Invalid input');
+            return;
         }
 
         const BFP = bfpCalc(cmAbs, cmNeck, cmHeight, cmWaist);
 
         console.log(`BODY FAT PERCENTAGE ${BFP}%`);
 
+        try {
+            const { data } = await addBody({
+                variables: { weight:kgWeight, bodyFatPercentage:BFP, height: cmHeight}
+            })
 
-        console.log('Submited');
-        // Empties the form after a successfull submision
-        setForm({ height: '', weight: '', neck: '', abdomen: '', waist: '' });
+            console.log(data.addBody.body);
+
+            console.log('Submited');
+            // Empties the form after a successfull submision
+            setForm({ height: '', weight: '', neck: '', abdomen: '', waist: '' });
+            setErrorMessage('');
+        } catch (err) {
+            console.log(err);
+            setErrorMessage(err.message);
+        }
     }
 
     return (
@@ -174,6 +216,7 @@ export default function BodyForm() {
                             /> </>}
                     <button className='btn btn-primary mx-2' type="submit">Submit</button>
                 </form>
+                {errorMessage && <div className='text-danger'>{errorMessage}</div>}
             </div>
         </>
     )

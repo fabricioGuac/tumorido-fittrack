@@ -1,9 +1,9 @@
 const { User, Body, Lift } = require('../models');
 const { signToken, AuthError } = require('../utils/auth');
-const { dateScalar } = require('./scalars');
+const  dateScalar  = require('./scalars');
 
 const resolvers = {
-    // Date: dateScalar,
+    Date: dateScalar,
     Query: {
         me: async (parent, arg, context) => {
             if (context.user) {
