@@ -1,8 +1,12 @@
 import { useState } from 'react';
 
+import LiftExerciseInput from './LiftExerciseInput';
+import LiftSetInput from './LiftSetsInput';
+import LiftUnitInput from './LiftUnitInput';
+
 import { useMutation } from '@apollo/client';
 
-import {ADD_LIFT} from '../utils/mutations';
+import { ADD_LIFT } from '../utils/mutations';
 
 export default function LiftForm({ liftOptions }) {
     // Set state variables
@@ -13,7 +17,7 @@ export default function LiftForm({ liftOptions }) {
     const [suggestions, setSuggestions] = useState([]);
     const [selectedSuggestion, setSelectedSuggestion] = useState(-1)
 
-    const [addLift, {error}] = useMutation(ADD_LIFT);
+    const [addLift, { error }] = useMutation(ADD_LIFT);
 
     const handleAddSet = () => {
         setSets([...sets, { reps: '', weight: '' }]);
@@ -25,9 +29,9 @@ export default function LiftForm({ liftOptions }) {
 
     const handleInputChange = (index, e) => {
         const { name, value } = e.target;
-    
+
         if (name === 'exercise') {
-            setExercise(value); 
+            setExercise(value);
 
             // If there is a value filter the options that include the value and get the options exercise name using map
             if (value && liftOptions) {
@@ -49,7 +53,7 @@ export default function LiftForm({ liftOptions }) {
     };
 
     const lbsToKg = (weight) => {
-        return units === 'lbs' ? weight * 0.453592 : weight; 
+        return units === 'lbs' ? weight * 0.453592 : weight;
     };
 
     const removeSet = (index) => {
@@ -61,17 +65,17 @@ export default function LiftForm({ liftOptions }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if(!exercise){
+        if (!exercise) {
             setErrorMessage('Make sure to add the exercise name');
             return;
         }
 
-        if(sets.some(set => set.reps === '' || set.weight === '')){
+        if (sets.some(set => set.reps === '' || set.weight === '')) {
             setErrorMessage('Make sure to fill all the data of your set');
             return;
         }
 
-        const parsedSets = sets.map( set => ({
+        const parsedSets = sets.map(set => ({
             reps: parseFloat(set.reps),
             weight: (lbsToKg(parseFloat(set.weight)))
         }))
@@ -81,19 +85,19 @@ export default function LiftForm({ liftOptions }) {
             sets: parsedSets
         }
 
-        if(parsedSets.some(set => isNaN(set.reps) || isNaN(set.weight))){
+        if (parsedSets.some(set => isNaN(set.reps) || isNaN(set.weight))) {
             setErrorMessage('Make sure the set data are numbers');
             return;
         }
 
-        
-        console.log(formData);
+
         try {
-            const {data} = await addLift({
+            const { data } = await addLift({
                 variables: formData
             })
 
-            console.log(data.addLift.lift);
+            console.log(`${data.addLift.username} updated with the new lift:`);
+            console.log(formData);
 
             setSets([{ reps: '', weight: '' }]);
             setExercise('');
@@ -109,7 +113,7 @@ export default function LiftForm({ liftOptions }) {
     const handleSuggestionClick = (suggestion) => {
         setExercise(suggestion);
         setSuggestions([]);
-    } 
+    }
 
     const handleSuggestNav = (e) => {
         if (e.key === 'ArrowDown') {
@@ -124,96 +128,39 @@ export default function LiftForm({ liftOptions }) {
     }
 
     return (
-        <div className='container'> 
-        <form onSubmit={handleSubmit}>
-            <div>
-            <label htmlFor="exercise" className="form-label">Exercise name</label>
-                <input 
-                    type='text'
-                    name='exercise'
-                    id='exercise'
-                    value={exercise}
+        <div className='container'>
+            <form onSubmit={handleSubmit}>
+                <LiftExerciseInput
+                    exercise={exercise}
                     onChange={(e) => handleInputChange(null, e)}
                     onKeyDown={handleSuggestNav}
-                    placeholder='Exercise'
-                    className='form-control'
+                    suggestions={suggestions}
+                    onSuggestionClick={handleSuggestionClick}
+                    selectedSuggestion={selectedSuggestion}
                 />
-                {suggestions.length > 0 && (
-                <ul className="list-group mt-2">
-                    {suggestions.map((suggestion, index) => (
-                        <li
-                            key={index}
-                            className={`list-group-item list-group-item-action ${index === selectedSuggestion ? 'active' : ''}`}
-                            onClick={() => handleSuggestionClick(suggestion)}
-                        >
-                            {suggestion}
-                        </li>
-                    ))}
-                </ul>
-            )}
-            </div>
-            <div>
-                <label>
-                    <input
-                        type="radio"
-                        value="lbs"
-                        id='lbs'
-                        checked={units === 'lbs'}
-                        onChange={handleUnitChange}
-                    />
-                    lbs
-                </label>
-                <label className='mx-2'>
-                    <input
-                        type="radio"
-                        value="kg"
-                        id='kg'
-                        checked={units === 'kg'}
-                        onChange={handleUnitChange}
-                    />
-                    kg
-                </label>
-            </div>
-            {sets.map((set, index) => (
-                <div key={index}>
-            <label htmlFor={`reps${index}`} className="form-label">Reps</label>
-                    <input
-                        type="text"
-                        name="reps"
-                        id={`reps${index}`}
-                        value={set.reps}
-                        onChange={(e) => handleInputChange(index, e)}
-                        placeholder="Reps"
-                        className='form-control'
-                        
-                    />
-            <label htmlFor={`weight${index}`} className="form-label">Weight</label>
-                    <input
-                        type="text"
-                        name="weight"
-                        id={`weight${index}`}
-                        value={set.weight}
-                        onChange={(e) => handleInputChange(index, e)}
-                        placeholder="Weight"
-                        className='form-control'
-                    />
-                    <button
-                            type="button"
-                            className='btn btn-danger'
-                            onClick={() => removeSet(index)}
-                        >
-                            Remove Set
-                        </button>
+
+                <LiftUnitInput
+                    units={units}
+                    onChange={handleUnitChange}
+                />
+                {sets.map((set, index) => (
+                    <div key={index}>
+                        <LiftSetInput
+                            index={index}
+                            set={set}
+                            onChange={(e) => handleInputChange(index, e)}
+                            removeSet={removeSet}
+                        />
+                    </div>
+                ))}
+                <div className='mt-2 '>
+                    <button className='btn btn-primary' type="button" onClick={handleAddSet}>
+                        Add Set
+                    </button>
+                    <button className='btn btn-primary mx-2' type="submit">Submit</button>
                 </div>
-            ))}
-            <div className='mt-2 '>
-            <button className='btn btn-primary' type="button" onClick={handleAddSet}>
-                Add Set
-            </button>
-            <button className='btn btn-primary mx-2' type="submit">Submit</button>
-            </div>
-        </form>
-        {errorMessage && <div className='text-danger'>{errorMessage}</div>}
+            </form>
+            {errorMessage && <div className='text-danger'>{errorMessage}</div>}
         </div>
     );
 }
