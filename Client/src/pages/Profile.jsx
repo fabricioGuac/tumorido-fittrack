@@ -108,7 +108,7 @@ export default function Profile() {
 
     console.log(data);
     return (<>
-    <h2>{data.me.username}</h2>
+    <h2>{data?.me.username}</h2>
     <LiftForm liftOptions={liftOptions} />
     <BodyForm  />
     </>)

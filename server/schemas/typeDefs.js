@@ -41,8 +41,8 @@ type User {
     _id: ID!
     username: String!
     email:String!
-    body: [ID]
-    lift: [ID]
+    body: [Body]
+    lift: [Lift]
     }
 
 

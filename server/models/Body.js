@@ -37,6 +37,6 @@ const BodySchema = new Schema (
 //     return fatFreeMass / (this.height * this.height);
 // })
 
-const Body = model('body', BodySchema);
+const Body = model('Body', BodySchema);
 
 module.exports = Body;

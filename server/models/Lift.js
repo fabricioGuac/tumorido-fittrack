@@ -46,6 +46,6 @@ liftSchema.virtual('totalWeightLifted').get(function () {
     return this.sets.reduce((total, set) => total + (set.weight * set.reps), 0);
 });
 
-const Lift = model('lift', liftSchema);
+const Lift = model('Lift', liftSchema);
 
 module.exports = Lift;

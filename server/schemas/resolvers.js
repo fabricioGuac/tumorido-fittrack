@@ -7,8 +7,7 @@ const resolvers = {
     Query: {
         me: async (parent, arg, context) => {
             if (context.user) {
-                return User.findOne({ _id: context.user._id });
-                // .populate('body').populate('lift')
+                return await User.findOne({ _id: context.user._id }).populate('lift').populate('body');
             }
             throw AuthError;
         },
