@@ -4,11 +4,14 @@ import { useMutation } from '@apollo/client';
 
 import {ADD_LIFT} from '../utils/mutations';
 
-export default function LiftForm() {
+export default function LiftForm({ liftOptions }) {
+    // Set state variables
     const [exercise, setExercise] = useState('');
     const [sets, setSets] = useState([{ reps: '', weight: '' }]);
     const [units, setUnits] = useState('lbs');
     const [errorMessage, setErrorMessage] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
+    const [selectedSuggestion, setSelectedSuggestion] = useState(-1)
 
     const [addLift, {error}] = useMutation(ADD_LIFT);
 
@@ -25,8 +28,20 @@ export default function LiftForm() {
     
         if (name === 'exercise') {
             setExercise(value); 
-        } else {
 
+            // If there is a value filter the options that include the value and get the options exercise name using map
+            if (value && liftOptions) {
+                const filteredSuggestions = liftOptions
+                    .filter(lift => lift.exercise.toLowerCase().includes(value.toLowerCase()))
+                    .map(lift => lift.exercise);
+                setSuggestions(filteredSuggestions);
+            } else {
+                setSuggestions([]);
+            }
+
+
+        } else {
+            // Updates the sets value
             const newSets = [...sets];
             newSets[index][name] = value;
             setSets(newSets);
@@ -91,6 +106,23 @@ export default function LiftForm() {
         }
     };
 
+    const handleSuggestionClick = (suggestion) => {
+        setExercise(suggestion);
+        setSuggestions([]);
+    } 
+
+    const handleSuggestNav = (e) => {
+        if (e.key === 'ArrowDown') {
+            setSelectedSuggestion(prevIndex => (prevIndex < suggestions.length - 1 ? prevIndex + 1 : 0));
+        } else if (e.key === 'ArrowUp') {
+            setSelectedSuggestion(prevIndex => (prevIndex > 0 ? prevIndex - 1 : suggestions.length - 1));
+        } else if (e.key === 'Enter') {
+            if (selectedSuggestion > -1) {
+                handleSuggestionClick(suggestions[selectedSuggestion]);
+            }
+        }
+    }
+
     return (
         <div className='container'> 
         <form onSubmit={handleSubmit}>
@@ -102,9 +134,23 @@ export default function LiftForm() {
                     id='exercise'
                     value={exercise}
                     onChange={(e) => handleInputChange(null, e)}
+                    onKeyDown={handleSuggestNav}
                     placeholder='Exercise'
                     className='form-control'
                 />
+                {suggestions.length > 0 && (
+                <ul className="list-group mt-2">
+                    {suggestions.map((suggestion, index) => (
+                        <li
+                            key={index}
+                            className={`list-group-item list-group-item-action ${index === selectedSuggestion ? 'active' : ''}`}
+                            onClick={() => handleSuggestionClick(suggestion)}
+                        >
+                            {suggestion}
+                        </li>
+                    ))}
+                </ul>
+            )}
             </div>
             <div>
                 <label>
