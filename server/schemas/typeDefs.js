@@ -43,6 +43,7 @@ type User {
     email:String!
     body: [Body]
     lift: [Lift]
+    height: Float
     }
 
 
