@@ -1,3 +1,7 @@
+a:hover {
+  cursor: pointer;
+}
+
 .BLData-container {
   display: flex;
   justify-content: space-between;

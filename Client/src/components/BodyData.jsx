@@ -36,9 +36,9 @@ export default function BodyData({ bodyData, height }) {
 
 
 
-    if (bodyData.lenght < 1) {
+    if (bodyData.length < 1) {
         return (
-            <h1 className="justify-content-center align-items-center">No data registered yet</h1>
+            <h1 className="d-flex justify-content-center align-items-center">No data registered yet</h1>
         )
     }
 
@@ -49,7 +49,7 @@ export default function BodyData({ bodyData, height }) {
                 {bodyData.map((item, index) => (
                     <div key={index}>
                         <details>
-                            <summary>{item.date}</summary>
+                            <summary>{new Date(item.date).toLocaleDateString()}</summary>
                             <p>Weight: {item.weight}</p>
                             <p>Body Fat Percentage: {item.bodyFatPercentage}</p>
                             <p>FFMI: {calculateFFMI(item.weight, item.bodyFatPercentage)}</p>
