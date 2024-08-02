@@ -28,6 +28,7 @@ const BodySchema = new Schema (
     toJSON: {
         getters: true,
     },
+    id:false,
 })
 
 // Calculate in the client side

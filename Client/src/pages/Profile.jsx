@@ -1,15 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import  BodyForm  from '../components/BodyForm';
-import  LiftForm  from '../components/LiftForm';
+// Import the necessary modules from Chart.js, this registers all default components needed for chart rendering
+import Chart from "chart.js/auto";
+
+import BodyForm from '../components/BodyForm';
+import LiftForm from '../components/LiftForm';
+import Graph from '../components/Graph';
+
 
 import { useQuery } from "@apollo/client";
 
 import { GET_ME } from "../utils/queries";
 
 import Auth from '../utils/auth';
-
 
 export default function Profile() {
 
@@ -18,7 +22,7 @@ export default function Profile() {
     // Redirects the user to the login page if not logged in
     useEffect(() => {
         if (!Auth.loggedIn()) {
-            navigate('/login'); 
+            navigate('/login');
         }
     }, []);
 
@@ -32,7 +36,7 @@ export default function Profile() {
         return index === meLift.findIndex((l) => {
             return l.exercise === lift.exercise;
         })
-    } )
+    })
 
 
     if (loading) {
@@ -41,8 +45,16 @@ export default function Profile() {
 
     console.log(data);
     return (<>
-    <h2>{data?.me.username}</h2>
-    <LiftForm liftOptions={liftOptions} />
-    <BodyForm  />
+        <h2>{data?.me.username}</h2>
+        <LiftForm liftOptions={liftOptions} />
+        <BodyForm />
+        <Graph
+            title='Bench press'
+            units='kg'
+            data={{
+                dates: ['January', 'February', 'March'],
+                values: [60, 62, 65]
+            }}
+        />
     </>)
 }

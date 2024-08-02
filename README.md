@@ -2,7 +2,7 @@
 
 ## Description 
 
-This project will be a full-stack application leveraging the MERN stack (MongoDB, Express.js, React, Node.js) to create a comprehensive fit tracking app. It aims to help users monitor their fitness activities, set goals, and track progress through an interactive and mobile-friendly interface. The application will utilize GraphQL for efficient data querying and mutations, with JWT for  authentication. The app will be deployed on Render.
+This project will be a full-stack application leveraging the MERN stack (MongoDB, Express.js, React, Node.js) to create a comprehensive fit tracking app. It aims to help users monitor their fitness activities, and track progress through an interactive and mobile-friendly interface. The application will utilize GraphQL for efficient data querying and mutations, with JWT for  authentication. The app will be deployed on Render.
 
 ## Instalation
 
