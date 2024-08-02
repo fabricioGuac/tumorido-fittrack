@@ -75,13 +75,18 @@ export default function BodyForm() {
         return radios.massUnit === 'lbs' ? weight * 0.453592 : weight;
     };
 
-    const bfpCalc = (abdomen, neck, height, waist) => {
-        if (radios.sex === 'Male') {
-            return 495 / (1.0324 - 0.19077 * Math.log10(abdomen - neck) + 0.15456 * Math.log10(height)) - 450;
+    const bfpCalc = (abdomen, neck, height, waist, sex) => {
+        let bfPercentage = 0;
+    
+        if (sex === 'Male') {
+            bfPercentage = 495 / (1.0324 - 0.19077 * Math.log10(abdomen - neck) + 0.15456 * Math.log10(height)) - 450;
         } else {
-            return 495 / (1.29579 - 0.35004 * Math.log10(abdomen + waist - neck) + 0.22100 * Math.log10(height)) - 450;
+            bfPercentage = 495 / (1.29579 - 0.35004 * Math.log10(abdomen + waist - neck) + 0.22100 * Math.log10(height)) - 450;
         }
+    
+        return parseFloat(bfPercentage.toFixed(2));
     };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();

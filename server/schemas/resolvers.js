@@ -15,7 +15,7 @@ const resolvers = {
                     
         user.lift = user.lift.map(lift => ({
             ...lift,
-            totalWeightLifted: lift.sets.reduce((total, set) => total + (set.weight * set.reps), 0)
+            totalWeightLifted: lift.sets.reduce((total, set) => total + (set.weight * set.reps), 0).toFixed(2)
         }))
 
 

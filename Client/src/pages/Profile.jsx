@@ -6,8 +6,8 @@ import Chart from "chart.js/auto";
 
 import BodyForm from '../components/BodyForm';
 import LiftForm from '../components/LiftForm';
-import Graph from '../components/Graph';
-
+import LiftData from '../components/LiftData';
+import BodyData from '../components/BodyData';
 
 import { useQuery } from "@apollo/client";
 
@@ -24,12 +24,16 @@ export default function Profile() {
         if (!Auth.loggedIn()) {
             navigate('/login');
         }
-    }, []);
 
+
+    }, []);
 
     const { loading, data } = useQuery(GET_ME);
 
+
     const lifts = data?.me.lift || [];
+    const body = data?.me.body || [];
+    const height = data?.me.height || 0
 
     // Filter repeated names
     const liftOptions = lifts.filter((lift, index, meLift) => {
@@ -48,13 +52,11 @@ export default function Profile() {
         <h2>{data?.me.username}</h2>
         <LiftForm liftOptions={liftOptions} />
         <BodyForm />
-        <Graph
-            title='Bench press'
-            units='kg'
-            data={{
-                dates: ['January', 'February', 'March'],
-                values: [60, 62, 65]
-            }}
+        {/* <LiftData liftOptions={liftOptions}
+        liftsData={lifts}
+        /> */}
+        <BodyData bodyData={body}
+        height={height}
         />
     </>)
 }
