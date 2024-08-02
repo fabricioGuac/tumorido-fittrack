@@ -7,11 +7,18 @@ const resolvers = {
     Query: {
         me: async (parent, arg, context) => {
             if (context.user) {
-                return await User.findOne({ _id: context.user._id }).populate('lift').populate('body');
+                // try {
+                    return await User.findOne({ _id: context.user._id })
+        .populate({ path: 'lift', options: { sort: { date: -1 } } })
+        .populate({ path: 'body', options: { sort: { date: -1 } } }).lean();
+                    
+        // return user;
+        //         } catch (err) {
+        //             return `NO GOOD ${err}`;
+        //         }
             }
             throw AuthError;
         },
-
 
         // Query to make an query exercises by name to an api
         getExerciseByName: async (parent, { name }) => {

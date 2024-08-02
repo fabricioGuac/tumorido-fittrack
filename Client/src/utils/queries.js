@@ -10,12 +10,14 @@ query me {
         lift {
             _id
             exercise
+            date
             sets {
                 reps
                 weight
             }
         }
         body {
+            date
             bodyFatPercentage
             weight
         }
