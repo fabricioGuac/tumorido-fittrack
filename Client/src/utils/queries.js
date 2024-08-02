@@ -11,6 +11,7 @@ query me {
             _id
             exercise
             date
+            totalWeightLifted
             sets {
                 reps
                 weight

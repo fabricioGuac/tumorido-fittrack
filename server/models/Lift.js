@@ -41,10 +41,11 @@ const liftSchema = new Schema(
         id: false,
 });
 
-// Virtual field to calculate the total weight lifted for exercise session
-liftSchema.virtual('totalWeightLifted').get(function () {
-    return this.sets.reduce((total, set) => total + (set.weight * set.reps), 0);
-});
+// TODO: Apply The Principle of Least Cardinality if possible, populating the user like that must be very inneficient just create another query for Lifts
+// // Virtual field to calculate the total weight lifted for exercise session
+// liftSchema.virtual('totalWeightLifted').get(function () {
+//     return this.sets.reduce((total, set) => total + (set.weight * set.reps), 0);
+// });
 
 const Lift = model('Lift', liftSchema);
 

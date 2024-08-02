@@ -5,17 +5,24 @@ const dateScalar = require('./scalars');
 const resolvers = {
     Date: dateScalar,
     Query: {
+        // TODO: Remove the populate('lift')  if possible within the timeframe query it on a need basis instead
         me: async (parent, arg, context) => {
             if (context.user) {
-                // try {
-                    return await User.findOne({ _id: context.user._id })
+                try {
+                    const user = await User.findOne({ _id: context.user._id })
         .populate({ path: 'lift', options: { sort: { date: -1 } } })
         .populate({ path: 'body', options: { sort: { date: -1 } } }).lean();
                     
-        // return user;
-        //         } catch (err) {
-        //             return `NO GOOD ${err}`;
-        //         }
+        user.lift = user.lift.map(lift => ({
+            ...lift,
+            totalWeightLifted: lift.sets.reduce((total, set) => total + (set.weight * set.reps), 0)
+        }))
+
+
+        return user;
+                } catch (err) {
+                    return `NO GOOD ${err}`;
+                }
             }
             throw AuthError;
         },
