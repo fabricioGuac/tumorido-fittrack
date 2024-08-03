@@ -10,31 +10,6 @@ export default function LiftData({ liftOptions, liftsData }) {
     const [graphData, setGraphdata] = useState({});
 
 
-    // useEffect(() => {
-        
-    //     const filteredLifts = liftsData.filter(lift => lift.exercise === selectedLift);
-    
-    //     const result = filteredLifts.reduce((acc, item) => {
-    //         // Formats the date
-    //         acc.dates.push(new Date(item.date).toLocaleDateString()); 
-    
-    //         if ( graphTarget === 'totalWeightLifted') {
-    //             acc.values.push(item.totalWeightLifted);
-    //         } else if (graphTarget === 'reps' || graphTarget  === 'weight') {
-    //             // Ensure there are sets and access the first set
-    //             const firstSet = item.sets[0];
-    //             if (firstSet) {
-    //                 acc.values.push( graphTarget === 'reps' ? firstSet.reps : firstSet.weight);
-    //             } else {
-    //                 acc.values.push(item.sets.length)
-    //             }
-    //         }
-    //         return acc;
-    //     }, { dates: [], values: [] });
-    
-    //     setGraphdata(result);
-    // }, [selectedLift, graphTarget]);
-
     useEffect(() => {
         const filteredLifts = liftsData.filter(lift => lift.exercise === selectedLift);
     
@@ -61,7 +36,7 @@ export default function LiftData({ liftOptions, liftsData }) {
         }, { dates: [], values: [] });
     
         setGraphdata(result);
-    }, [selectedLift, graphTarget, liftsData]);
+    }, [selectedLift, graphTarget]);
 
 
 
