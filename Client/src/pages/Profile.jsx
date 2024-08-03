@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // Import the necessary modules from Chart.js, this registers all default components needed for chart rendering
 import Chart from "chart.js/auto";
@@ -9,13 +9,17 @@ import LiftForm from '../components/LiftForm';
 import LiftData from '../components/LiftData';
 import BodyData from '../components/BodyData';
 
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { GET_ME } from "../utils/queries";
+// import {SET_PFP} from "../utils/mutations";
 
 import Auth from '../utils/auth';
 
 export default function Profile() {
+
+    const [view, setView] = useState('bodyData');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -30,7 +34,6 @@ export default function Profile() {
 
     const { loading, data } = useQuery(GET_ME);
 
-
     const lifts = data?.me.lift || [];
     const body = data?.me.body || [];
     const height = data?.me.height || 0
@@ -42,21 +45,49 @@ export default function Profile() {
         })
     })
 
+    // const [setPfp, { error }] = useMutation(SET_PFP);
+
+    // const handlePfpUpload = async () => {
+    //     try {
+    //         const {data} = await setPfp({
+    //             variables:{ file: pfp }
+    //         });
+
+    //     } catch (err) {
+    //         console.log(err.message);
+    //         setErrorMessage(err.message);
+    //     }
+    // }
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
     console.log(data);
-    return (<>
-        <h2>{data?.me.username}</h2>
-        <LiftForm liftOptions={liftOptions} />
-        <BodyForm />
-        <LiftData liftOptions={liftOptions}
-        liftsData={lifts}
-        />
-        <BodyData bodyData={body}
-        height={height}
-        />
-    </>)
+    return (
+        <>
+            <div className='row'>
+                <div className='col-md-2'>
+                    <div>
+                        <h2>{data?.me.username}</h2>
+                        <img src={data?.me.profilePic} alt="profile picture" className='img-fluid' />
+                        {/* <input type="file" accept="image/*" onChange={handlePfpUpload} /> */}
+                        {errorMessage && <div className='text-danger'>{errorMessage}</div>}
+                        <ul>
+                            <li onClick={() => setView("bodyData")}>Body data</li>
+                            <li onClick={() => setView("bodyForm")}>Add new body data</li>
+                            <li onClick={() => setView("liftData")}>Lift data</li>
+                            <li onClick={() => setView("liftForm")}>Add new lift</li>
+                        </ul>
+                    </div>
+                </div>
+                <div className='col-md-10'>
+                    {view === "bodyData" && <BodyData bodyData={body} height={height} />}
+                    {view === "bodyForm" && <BodyForm />}
+                    {view === "liftForm" && <LiftForm liftOptions={liftOptions} />}
+                    {view === "liftData" && <LiftData liftOptions={liftOptions} liftsData={lifts} />}
+                </div>
+            </div>
+        </>
+    );
 }
