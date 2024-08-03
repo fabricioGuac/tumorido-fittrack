@@ -31,7 +31,7 @@ export default function Graph({ title, units, data }) {
                         title: {
                             display: true,
                             // Set the title for the chart
-                            text: `Progress in ${title} over time measured in ${units}`
+                            text: `Progress in ${title} over time`
                         },
                         legend: {
                             display: false

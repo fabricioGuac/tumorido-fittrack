@@ -5,7 +5,7 @@ export default function BodyData({ bodyData, height }) {
 
     // Sets the state variable to identify the target data that will be displayed in the graph
     const [graphTarget, setGraphTarget] = useState('FFMI');
-    // Sets state variable to store keep the graph data
+    // Sets state variable to store the graph data
     const [graphData, setGraphdata] = useState({});
 
     // Function to calculate FFMI
@@ -46,10 +46,10 @@ export default function BodyData({ bodyData, height }) {
     return (
         <div className="BLData-container">
             <div className="history-container">
-                {bodyData.map((item, index) => (
-                    <div key={index}>
+                {bodyData.map((item) => (
+                    <div key={item.date}>
                         <details>
-                            <summary>{new Date(item.date).toLocaleDateString()}</summary>
+                            <summary>{`Body measurements in ${new Date(item.date).toLocaleDateString()}`}</summary>
                             <p>Weight: {item.weight}</p>
                             <p>Body Fat Percentage: {item.bodyFatPercentage}</p>
                             <p>FFMI: {calculateFFMI(item.weight, item.bodyFatPercentage)}</p>
@@ -59,9 +59,9 @@ export default function BodyData({ bodyData, height }) {
             </div>
 
             <div className="chart-container">
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <div className="collapse navbar-collapse">
-                        <ul className="navbar-nav">
+                <nav className="navbar navbar-expand-lg bg-light">
+                    <div className="container">
+                        <ul className="navbar-nav mx-auto">
                             <li className={`nav-item ${graphTarget === "FFMI" ? "active" : ''}`} onClick={() => setGraphTarget("FFMI")}>
                                 <a className="nav-link">FFMI</a>
                             </li>
@@ -74,6 +74,7 @@ export default function BodyData({ bodyData, height }) {
                         </ul>
                     </div>
                 </nav>
+
 
                 {graphTarget === "FFMI" && <Graph title="Fat Free Mass Index" units="FFMI" data={graphData} />}
                 {graphTarget === "bodyFatPercentage" && <Graph title="Body Fat Percentage" units="BF%" data={graphData} />}

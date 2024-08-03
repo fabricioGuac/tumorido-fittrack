@@ -52,9 +52,9 @@ export default function Profile() {
         <h2>{data?.me.username}</h2>
         <LiftForm liftOptions={liftOptions} />
         <BodyForm />
-        {/* <LiftData liftOptions={liftOptions}
+        <LiftData liftOptions={liftOptions}
         liftsData={lifts}
-        /> */}
+        />
         <BodyData bodyData={body}
         height={height}
         />
