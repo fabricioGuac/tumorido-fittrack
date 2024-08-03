@@ -2,9 +2,11 @@ import { useState } from "react";
 
 export default function CalorieCalc ({latestData, latestFFMI, height}){
 
+    // Sets the state vriables
     const [gender, setGender] = useState('Male');
     const [activityLevel, setActivityLevele] = useState('moderate');
     const [age, setAge] = useState(18);
+    const [calMacCalcData, setcalMacCalcData] = useState(null);
 
 //Creates two objects to store the respective data based on the activity level
 const activityMultipliers ={ 
@@ -53,10 +55,12 @@ const CaloMacCalc = (e) => {
     const recomendedProteinRange = [Math.round(proteinLow * latestData.weight), Math.round(proteinHigh * latestData.weight)];
 
     console.log(`BASIC: ${Math.round(BMR)}, TOTAL: ${Math.round(TDEE)}, PROTEIN: ${avgRecProtIntake}, FATS: ${recomFatIntake}, CARBS: ${recomCarbsIntake}, RECOMENDED RANGE FOR PROTEIN:${recomendedProteinRange}`)
-	return {
-	BMR, TDEE, avgRecProtIntake, recomFatIntake, recomCarbsIntake, recomendedProteinRange
-	}
-
+	// return {
+	// BMR, TDEE, avgRecProtIntake, recomFatIntake, recomCarbsIntake, recomendedProteinRange
+	// }
+    setcalMacCalcData({
+        BMR, TDEE, avgRecProtIntake, recomFatIntake, recomCarbsIntake, recomendedProteinRange
+        })
     }
 
 
@@ -108,6 +112,17 @@ const CaloMacCalc = (e) => {
                     Calculate maintainance calories
                 </button>
         </form>
+        {calMacCalcData && (
+        <div>
+            <h3>Basic metabolic rate: {Math.round(calMacCalcData.BMR)}cals</h3>
+            <h3>Mantainanca calories:{Math.round(calMacCalcData.TDEE)}cals</h3>
+            <p>Add or take 200 to 500cals to te mantainance calories if you want to gain or loose weight</p>
+            <h4>Recomended protein intake: {calMacCalcData.avgRecProtIntake}g</h4>
+            <h4>Recomended carbs intake: {calMacCalcData.recomCarbsIntake}g</h4>
+            <h4>Recomended fats intake: {calMacCalcData.recomFatIntake}g</h4>
+            <h4>Range of protein grams {calMacCalcData.recomendedProteinRange[0]}g and {calMacCalcData.recomendedProteinRange[1]}g </h4>
+        </div>)
+        }
         <div className="">
 
         </div>
