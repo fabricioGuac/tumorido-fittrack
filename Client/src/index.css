@@ -1,10 +1,20 @@
 body {
   overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #eee;
+  font-size: 18px;
+  background-color: #071138;
+  background-image: repeating-linear-gradient(
+    135deg, transparent 0 49px, #eee1 109px 
+    50px
+  );
+  height: 100vh;
 }
 
 a:hover {
   cursor: pointer;
 }
+
 
 .BLData-container {
   display: flex;
@@ -37,7 +47,9 @@ a:hover {
   font-weight: bold; 
 }
 
-
+/* .logSign-forms {
+  background-color: rgb(195, 195, 221);
+} */
 
 
 

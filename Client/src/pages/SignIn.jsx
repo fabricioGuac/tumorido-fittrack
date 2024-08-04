@@ -92,7 +92,7 @@ export default function Signin() {
     };
 
     return (
-        <div className="container">
+        <div className="container logSign-forms">
             <h2 className="my-4">Sign In</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
