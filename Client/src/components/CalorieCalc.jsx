@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import FfmiScoreTable from "./FfmiScoreTable";
+
 export default function CalorieCalc ({latestData, latestFFMI, height}){
 
     // Sets the state vriables
@@ -124,7 +126,7 @@ const CaloMacCalc = (e) => {
         </div>)
         }
         <div className="">
-
+        <FfmiScoreTable FFMI={latestFFMI} Bfp={latestData.bodyFatPercentage} gender={gender}/>
         </div>
         </>
     )
