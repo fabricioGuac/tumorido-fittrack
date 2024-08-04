@@ -201,7 +201,7 @@ export default function BodyForm({setView}) {
                         className='form-control'
                     />
 
-                    <label htmlFor="abdomen" className="form-label">Abdoment measurements</label>
+                    <label htmlFor="abdomen" className="form-label">Abdomen measurements</label>
                     <input
                         type='text'
                         name='abdomen'

@@ -36,14 +36,14 @@ useEffect(() => {
             return;
         }
         // Edge case if no category matches the user (Very common, there are not many reference tables for ffmi)
-        setFfmiScore('NO');
+        setFfmiScore('UNCATEGORIZED');
     }
 }, [FFMI, Bfp, gender])
 
 
     return (
 <>
-    {FfmiScore && <h2>As of your last measurements you fit in {FfmiScore} category</h2>}
+    {FfmiScore && <h2>As of your last measurements you fit in the {FfmiScore} category</h2>}
     <h2>FFMI interpretation for men</h2>
     <table>
         <thead>
