@@ -35,8 +35,11 @@ useEffect(() => {
             setFfmiScore(rangeForCurrentGender[i].category);
             return;
         }
-        // Edge case if no category matches the user (Very common, there are not many reference tables for ffmi)
-        setFfmiScore('UNCATEGORIZED');
+        // If it is the last loop updates the score
+        if(i === 5){
+            // Edge case if no category matches the user (Very common, there are not many reference tables for ffmi)
+            setFfmiScore('UNCATEGORIZED');
+        }
     }
 }, [FFMI, Bfp, gender])
 
