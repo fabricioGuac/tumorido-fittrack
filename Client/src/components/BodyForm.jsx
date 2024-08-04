@@ -15,7 +15,7 @@ export default function BodyForm({setView}) {
     const [errorMessage, setErrorMessage] = useState('');
 
     // Mutation to add body metrics
-    const [addBody, { error }] = useMutation(ADD_BODY, {
+    const [addBody, { error, loading }] = useMutation(ADD_BODY, {
         refetchQueries: [
             { query: GET_ME }
         ],
@@ -225,9 +225,11 @@ export default function BodyForm({setView}) {
                                 placeholder='waist'
                                 className='form-control'
                             /> </>}
-                    <button className='btn btn-primary mx-2' type="submit">Submit</button>
+                        <button className='btn btn-primary mx-2' type="submit" disabled={loading}>
+                        {loading ? 'Submitting...' : 'Submit'}
+                        </button>
                 </form>
-                {errorMessage && <div className='text-danger'>{errorMessage}</div>}
+                {errorMessage && <div className='text-danger'><h4>{errorMessage}</h4></div>}
             </div>
         </>
     )

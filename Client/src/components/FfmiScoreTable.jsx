@@ -25,7 +25,7 @@ export default function FfmiScoreTable ({FFMI, Bfp, gender}){
         ]
     }
 
-    // When the component is rendered it gets the interpretations for the current gender
+    // When the component is rendered or the values of FFMI, Bfp or gender change. it gets the interpretations for the current gender
 useEffect(() => {
     const rangeForCurrentGender = FfmiRanges[gender];
 
@@ -35,7 +35,7 @@ useEffect(() => {
             setFfmiScore(rangeForCurrentGender[i].category);
             return;
         }
-        // Edge case if no category matches the user
+        // Edge case if no category matches the user (Very common, there are not many reference tables for ffmi)
         setFfmiScore('NO');
     }
 }, [FFMI, Bfp, gender])
