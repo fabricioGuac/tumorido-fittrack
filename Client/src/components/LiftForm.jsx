@@ -14,10 +14,11 @@ export default function LiftForm({ liftOptions }) {
     const [sets, setSets] = useState([{ reps: '', weight: '' }]);
     const [units, setUnits] = useState('lbs');
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [selectedSuggestion, setSelectedSuggestion] = useState(-1)
+    const [selectedSuggestion, setSelectedSuggestion] = useState(0)
 
-    const [addLift, { error }] = useMutation(ADD_LIFT);
+    const [addLift, { error, loading }] = useMutation(ADD_LIFT);
 
     const handleAddSet = () => {
         setSets([...sets, { reps: '', weight: '' }]);
@@ -29,6 +30,8 @@ export default function LiftForm({ liftOptions }) {
 
     const handleInputChange = (index, e) => {
         const { name, value } = e.target;
+
+        setSuccessMessage('');
 
         if (name === 'exercise') {
             setExercise(value);
@@ -102,11 +105,11 @@ export default function LiftForm({ liftOptions }) {
             setSets([{ reps: '', weight: '' }]);
             setExercise('');
             setErrorMessage('');
-
-            // Relocate to a graph of the lift over time??
+            setSuccessMessage('Lift added successfully!');
+            
         } catch (err) {
             console.log(err.message);
-            setErrorMessage(err.message);
+            setErrorMessage(`An error has ocurred adding the lift ${err.message}`);
         }
     };
 
@@ -122,6 +125,7 @@ export default function LiftForm({ liftOptions }) {
             setSelectedSuggestion(prevIndex => (prevIndex > 0 ? prevIndex - 1 : suggestions.length - 1));
         } else if (e.key === 'Enter') {
             if (selectedSuggestion > -1) {
+                e.preventDefault();
                 handleSuggestionClick(suggestions[selectedSuggestion]);
             }
         }
@@ -157,10 +161,13 @@ export default function LiftForm({ liftOptions }) {
                     <button className='btn btn-primary' type="button" onClick={handleAddSet}>
                         Add Set
                     </button>
-                    <button className='btn btn-primary mx-2' type="submit">Submit</button>
+                    <button className='btn btn-primary mx-2' type="submit" disabled={loading}>
+                        {loading ? 'Submitting...' : 'Submit'}
+                        </button>
                 </div>
             </form>
-            {errorMessage && <div className='text-danger'>{errorMessage}</div>}
+            {errorMessage && <div className='text-danger'><h4>{errorMessage}</h4></div>}
+            {successMessage && <div className='text-success'><h4>{successMessage}</h4></div>}
         </div>
     );
 }

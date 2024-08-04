@@ -24,6 +24,9 @@ const userSchema = new Schema(
         height: {
             type: Number,
         },
+        pfp: {
+            type: String,
+        },
         body: [{ type: Schema.Types.ObjectId, ref: 'Body' }],
         lift: [{ type: Schema.Types.ObjectId, ref: 'Lift' }],
     },
