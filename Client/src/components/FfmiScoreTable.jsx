@@ -38,7 +38,7 @@ useEffect(() => {
         // Edge case if no category matches the user
         setFfmiScore('NO');
     }
-}, [])
+}, [FFMI, Bfp, gender])
 
 
     return (
@@ -132,3 +132,4 @@ useEffect(() => {
 
     )
 }
+

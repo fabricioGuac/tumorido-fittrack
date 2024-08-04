@@ -4,6 +4,7 @@ import BodyFormRadio from './BodyFormRadio';
 import { useMutation } from '@apollo/client';
 
 import { ADD_BODY } from '../utils/mutations';
+import { GET_ME } from '../utils/queries';
 
 
 export default function BodyForm({setView}) {
@@ -14,7 +15,11 @@ export default function BodyForm({setView}) {
     const [errorMessage, setErrorMessage] = useState('');
 
     // Mutation to add body metrics
-    const [addBody, {error}] = useMutation(ADD_BODY);
+    const [addBody, { error }] = useMutation(ADD_BODY, {
+        refetchQueries: [
+            { query: GET_ME }
+        ],
+    });
 
 
 
