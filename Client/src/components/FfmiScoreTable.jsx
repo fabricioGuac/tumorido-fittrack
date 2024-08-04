@@ -42,15 +42,18 @@ useEffect(() => {
 
 
     return (
-        <>
-        {FfmiScore && <h2>As of your last measurements you fit in {FfmiScore} category</h2>}
-                <h2>FFMI interpretation for men</h2>
-        <table>
+<>
+    {FfmiScore && <h2>As of your last measurements you fit in {FfmiScore} category</h2>}
+    <h2>FFMI interpretation for men</h2>
+    <table>
+        <thead>
             <tr>
                 <th>FFMI</th>
                 <th>Bf%</th>
                 <th>Description</th>
             </tr>
+        </thead>
+        <tbody>
             <tr>
                 <td>17-18</td>
                 <td>10-18%</td>
@@ -81,14 +84,18 @@ useEffect(() => {
                 <td>8-20%</td>
                 <td>Bodybuilder / Powerlifter / Weightlifter</td>
             </tr>
-        </table>
-        <h2>FFMI interpretation for women</h2>
-        <table>
+        </tbody>
+    </table>
+    <h2>FFMI interpretation for women</h2>
+    <table>
+        <thead>
             <tr>
                 <th>FFMI</th>
                 <th>Bf%</th>
                 <th>Description</th>
             </tr>
+        </thead>
+        <tbody>
             <tr>
                 <td>14-15</td>
                 <td>20-25%</td>
@@ -119,7 +126,9 @@ useEffect(() => {
                 <td>15-30%</td>
                 <td>Bodybuilder / Powerlifter / Weightlifter</td>
             </tr>
-        </table>
-        </>
+        </tbody>
+    </table>
+</>
+
     )
 }

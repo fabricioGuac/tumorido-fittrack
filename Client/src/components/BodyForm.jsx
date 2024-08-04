@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_BODY } from '../utils/mutations';
 
 
-export default function BodyForm() {
+export default function BodyForm({setView}) {
 
     // State variables
     const [radios, setRadios] = useState({ sex: 'Male', measureUnit: 'cm', massUnit: 'kg' })
@@ -78,7 +78,7 @@ export default function BodyForm() {
     const bfpCalc = (abdomen, neck, height, waist, sex) => {
         let bfPercentage = 0;
     
-        if (sex === 'Male') {
+        if (radios.sex === 'Male') {
             bfPercentage = 495 / (1.0324 - 0.19077 * Math.log10(abdomen - neck) + 0.15456 * Math.log10(height)) - 450;
         } else {
             bfPercentage = 495 / (1.29579 - 0.35004 * Math.log10(abdomen + waist - neck) + 0.22100 * Math.log10(height)) - 450;
@@ -145,6 +145,7 @@ export default function BodyForm() {
             // Empties the form after a successfull submision
             setForm({ height: '', weight: '', neck: '', abdomen: '', waist: '' });
             setErrorMessage('');
+            setView('bodyData');
         } catch (err) {
             console.log(err);
             setErrorMessage(err.message);

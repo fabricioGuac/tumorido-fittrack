@@ -37,6 +37,7 @@ export default function Profile() {
     const lifts = data?.me.lift || [];
     const body = data?.me.body || [];
     const height = data?.me.height || 0
+    const userPfp = data?.me.pfp || '/defaultPfp.png'
 
     // Filter repeated names
     const liftOptions = lifts.filter((lift, index, meLift) => {
@@ -55,7 +56,7 @@ export default function Profile() {
 
     //     } catch (err) {
     //         console.log(err.message);
-    //         setErrorMessage(err.message);
+    //         setErrorMessage("There was a problem uploading the profile picture");
     //     }
     // }
 
@@ -70,8 +71,10 @@ export default function Profile() {
                 <div className='col-md-2'>
                     <div>
                         <h2>{data?.me.username}</h2>
-                        <img src={data?.me.profilePic} alt="profile picture" className='img-fluid' />
+                        {/* <img src={data?.me.profilePic} alt="profile picture" className='img-fluid' /> */}
                         {/* <input type="file" accept="image/*" onChange={handlePfpUpload} /> */}
+                        <img src={userPfp} alt="profile picture" className='img-fluid rounded-circle' />
+
                         {errorMessage && <div className='text-danger'>{errorMessage}</div>}
                         <ul>
                             <li onClick={() => setView("bodyData")}>Body data</li>
@@ -83,7 +86,7 @@ export default function Profile() {
                 </div>
                 <div className='col-md-10'>
                     {view === "bodyData" && <BodyData bodyData={body} height={height} />}
-                    {view === "bodyForm" && <BodyForm />}
+                    {view === "bodyForm" && <BodyForm  setView={setView} />}
                     {view === "liftForm" && <LiftForm liftOptions={liftOptions} />}
                     {view === "liftData" && <LiftData liftOptions={liftOptions} liftsData={lifts} />}
                 </div>

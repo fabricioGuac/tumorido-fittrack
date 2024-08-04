@@ -57,9 +57,7 @@ const CaloMacCalc = (e) => {
     const recomendedProteinRange = [Math.round(proteinLow * latestData.weight), Math.round(proteinHigh * latestData.weight)];
 
     console.log(`BASIC: ${Math.round(BMR)}, TOTAL: ${Math.round(TDEE)}, PROTEIN: ${avgRecProtIntake}, FATS: ${recomFatIntake}, CARBS: ${recomCarbsIntake}, RECOMENDED RANGE FOR PROTEIN:${recomendedProteinRange}`)
-	// return {
-	// BMR, TDEE, avgRecProtIntake, recomFatIntake, recomCarbsIntake, recomendedProteinRange
-	// }
+
     setcalMacCalcData({
         BMR, TDEE, avgRecProtIntake, recomFatIntake, recomCarbsIntake, recomendedProteinRange
         })
