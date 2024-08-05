@@ -65,30 +65,55 @@ export default function Profile() {
     }
 
     console.log(data);
+
     return (
         <>
-            <div className='row'>
-                <div className='col-md-2'>
-                    <div>
-                        <h2>{data?.me.username}</h2>
-                        {/* <img src={data?.me.profilePic} alt="profile picture" className='img-fluid' /> */}
-                        {/* <input type="file" accept="image/*" onChange={handlePfpUpload} /> */}
-                        <img src={userPfp} alt="profile picture" className='img-fluid rounded-circle' />
+            <div className='p-4'>
+                <div className='row'>
+                    <div className='col-md-2 profile-sidebar'>
+                        <div className='row text-center'>
+                            
+                            <h2 className='username'>{data?.me.username}</h2>
+                            {/* <img src={data?.me.profilePic} alt="profile picture" className='img-fluid' /> */}
+                            {/* <input type="file" accept="image/*" onChange={handlePfpUpload} /> */}
+                            <img src={userPfp} alt="profile picture" className='img-fluid rounded-circle mb-4 pfp' />
 
-                        {errorMessage && <div className='text-danger'>{errorMessage}</div>}
-                        <ul>
-                            <li onClick={() => setView("bodyData")}>Body data</li>
-                            <li onClick={() => setView("bodyForm")}>Add new body data</li>
-                            <li onClick={() => setView("liftData")}>Lift data</li>
-                            <li onClick={() => setView("liftForm")}>Add new lift</li>
-                        </ul>
+                            {errorMessage && <div className='text-danger'>{errorMessage}</div>}
+                            <ul className='profile-nav'>
+                                <li
+                                    onClick={() => setView("bodyData")}
+                                    className={view === "bodyData" ? "activeView" : ""}
+                                >
+                                    Body data
+                                </li>
+                                <li
+                                    onClick={() => setView("bodyForm")}
+                                    className={view === "bodyForm" ? "activeView" : ""}
+                                >
+                                    Add new body data
+                                </li>
+                                <li
+                                    onClick={() => setView("liftData")}
+                                    className={view === "liftData" ? "activeView" : ""}
+                                >
+                                    Lift data
+                                </li>
+                                <li
+                                    onClick={() => setView("liftForm")}
+                                    className={view === "liftForm" ? "activeView" : ""}
+                                >
+                                    Add new lift
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div className='col-md-10'>
-                    {view === "bodyData" && <BodyData bodyData={body} height={height} />}
-                    {view === "bodyForm" && <BodyForm  setView={setView} />}
-                    {view === "liftForm" && <LiftForm liftOptions={liftOptions} />}
-                    {view === "liftData" && <LiftData liftOptions={liftOptions} liftsData={lifts} />}
+
+                    <div className='col-md-10'>
+                        {view === "bodyData" && <BodyData bodyData={body} height={height} />}
+                        {view === "bodyForm" && <BodyForm setView={setView} />}
+                        {view === "liftForm" && <LiftForm liftOptions={liftOptions} />}
+                        {view === "liftData" && <LiftData liftOptions={liftOptions} liftsData={lifts} />}
+                    </div>
                 </div>
             </div>
         </>
