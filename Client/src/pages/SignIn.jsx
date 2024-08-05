@@ -71,7 +71,7 @@ export default function Signin() {
         } catch (err) {
             if (err.message.includes('duplicate key') && err.message.includes('username')) {
                 // Handles duplicate username error
-                setErrorMessages({ username: `Username already taken try: ${userFormData.username} ${Math.floor(Math.random() * 999) + 1} `});
+                setErrorMessages({ username: `Username already taken try: ${userFormData.username}${Math.floor(Math.random() * 999) + 1} `});
                 console.error('An error occurred:', err.message, err);
             } else if (err.message.includes('duplicate key') && err.message.includes('email')) {
                 // Handles duplicate email error
@@ -92,61 +92,75 @@ export default function Signin() {
     };
 
     return (
-        <>
-            <h2 className="text-center">Join today</h2>
-        <div className=" logSign-forms">
-            <form className='col-12 col-md-6 p-4' onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="username" className="form-label">Username</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        className="form-control"
-                        placeholder="Your username"
-                        value={userFormData.username}
-                        onChange={handleInputChange}
-                    />
-                    {errorMessages.username && <div className='text-danger'>{errorMessages.username}</div>}
+        <div className='container'>
+            <h2 className="text-center">Sign in</h2>
+            <div className="logSign-forms d-flex flex-column flex-md-row">
+                <form className='col-12 col-md-6 p-4 mt-4' onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="username" className="form-label">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            className="form-control"
+                            placeholder="Your username"
+                            value={userFormData.username}
+                            onChange={handleInputChange}
+                        />
+                        {errorMessages.username && <div className='text-danger'>{errorMessages.username}</div>}
+                    </div>
+    
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input
+                            type="text"
+                            id="email"
+                            name="email"
+                            className="form-control"
+                            placeholder="Your email"
+                            value={userFormData.email}
+                            onChange={handleInputChange}
+                        />
+                        {errorMessages.email && <div className='text-danger'>{errorMessages.email}</div>}
+                    </div>
+    
+                    <div className="mb-3">
+                        <label htmlFor="password" className="form-label">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            className="form-control"
+                            placeholder="Your password"
+                            value={userFormData.password}
+                            onChange={handleInputChange}
+                        />
+                        {errorMessages.password && <div className='text-danger'>{errorMessages.password}</div>}
+                    </div>
+    
+                    <button
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={!(userFormData.username && userFormData.email && userFormData.password)}
+                    >
+                        Sign In
+                    </button>
+                </form>
+                <div className='col-12 col-md-6 p-4'>
+                <div>
+        <h2>Join Tumorido Fittrack</h2>
+        <p>Start tracking your fitness journey today!</p>
+        <ul>
+            <li>Track your body measurements and lifting stats over time.</li>
+            <li>Visualize your progress with easy-to-understand charts.</li>
+            <li>Browse our extensive exercise database.</li>
+            <li>Calculate your calorie and macronutrient needs.</li>
+        </ul>
+        <p>Sign up now and take the first step towards achieving your fitness goals!</p>
+    </div>
                 </div>
-
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
-                    <input
-                        type="text"
-                        id="email"
-                        name="email"
-                        className="form-control"
-                        placeholder="Your email"
-                        value={userFormData.email}
-                        onChange={handleInputChange}
-                    />
-                    {errorMessages.email && <div className='text-danger'>{errorMessages.email}</div>}
-                </div>
-
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        className="form-control"
-                        placeholder="Your password"
-                        value={userFormData.password}
-                        onChange={handleInputChange}
-                    />
-                    {errorMessages.password && <div className='text-danger'>{errorMessages.password}</div>}
-                </div>
-
-                <button
-                    type="submit"
-                    className="btn btn-primary"
-                    disabled={!(userFormData.username && userFormData.email && userFormData.password)}
-                >
-                    Sign In
-                </button>
-            </form>
+            </div>
         </div>
-        </>
     );
+    
 }

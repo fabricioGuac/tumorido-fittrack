@@ -11,10 +11,10 @@ body {
   height: 100vh;
 }
 
+
 a:hover {
   cursor: pointer;
 }
-
 
 .BLData-container {
   display: flex;
@@ -47,20 +47,25 @@ a:hover {
   font-weight: bold; 
 }
 
+
 .logSign-forms {
   min-height: 80vh;
-  align-items: center;
-  display: flex;
-  padding: 0 2rem;
-  /* background-color: rgb(209, 174, 174); */
+  align-items: flex-start;
+  padding: 2rem;
 }
 
 .logSign-forms form {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.2);
   max-width: 500px;
+  margin-bottom: 1rem; 
 }
 
-
+@media (max-width: 767.98px) {
+  .logSign-forms {
+    flex-direction: column;
+    padding: 1rem;
+  }
+}
 
 @media (max-width: 768px) {
   .BLData-container {
