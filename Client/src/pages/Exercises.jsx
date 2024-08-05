@@ -61,27 +61,29 @@ export default function Exercises() {
 
     return (
         <>
+            <h1 className="text-center mt-3">Exercises</h1>
             <div className="container mt-4">
-                <h1>Exercises</h1>
-                <div className="d-flex justify-content-around align-items-center mb-3">
-                    <div className="btn-group" role="group" aria-label="Target muscle">
-                        {muscles.map(muscle => (
-                            <button
-                                key={muscle}
-                                type="button"
-                                name={muscle}
-                                className={`btn ${activeMuscle === muscle ? 'btn-primary' : 'btn-secondary'}`}
-                                onClick={() => {
-                                    setActiveMuscle(muscle);
-                                    setActiveQuery('muscle');
-                                }}
-                            >
-                                {muscle}
-                            </button>
-                        ))}
+                <div className="row mb-3">
+                    <div className="col-12 col-md-8 mb-3 mb-md-0">
+                        <div className="d-flex flex-wrap">
+                            {muscles.map(muscle => (
+                                <button
+                                    key={muscle}
+                                    type="button"
+                                    name={muscle}
+                                    className={`btn ${activeMuscle === muscle ? 'btn-primary' : 'btn-secondary'} m-1`}
+                                    onClick={() => {
+                                        setActiveMuscle(muscle);
+                                        setActiveQuery('muscle');
+                                    }}
+                                >
+                                    {muscle}
+                                </button>
+                            ))}
+                        </div>
                     </div>
-                    <div className="d-flex align-items-center me-3">
-                        <form onSubmit={handleSubmit} className="d-flex flex-nowrap">
+                    <div className="col-12 col-md-4 d-flex align-items-center">
+                        <form onSubmit={handleSubmit} className="w-100">
                             <div className="input-group">
                                 <input
                                     type="text"
@@ -89,7 +91,7 @@ export default function Exercises() {
                                     id="exercise"
                                     value={exercise}
                                     onChange={(e) => setExercise(e.target.value)}
-                                    placeholder="Type exercise name..."
+                                    placeholder="Type exercise"
                                 />
                                 <button className="btn btn-secondary" type="submit">
                                     <span role="img" aria-label="search" className="me-1">🔎</span>
@@ -99,14 +101,19 @@ export default function Exercises() {
                         </form>
                     </div>
                 </div>
-            {activeQuery === 'muscle' && data?.getExerciseByMuscle && (
-                <ExerciseCard exercises={data.getExerciseByMuscle} />
-            )}
-            {activeQuery === 'name' && nameData?.getExerciseByName && (
-                <ExerciseCard exercises={nameData.getExerciseByName} />
-            )}
+                <div className="row">
+                    <div className="col-12">
+                        {activeQuery === 'muscle' && data?.getExerciseByMuscle && (
+                            <ExerciseCard exercises={data.getExerciseByMuscle} />
+                        )}
+                        {activeQuery === 'name' && nameData?.getExerciseByName && (
+                            <ExerciseCard exercises={nameData.getExerciseByName} />
+                        )}
+                    </div>
+                </div>
             </div>
-            
         </>
     );
+    
+    
 }

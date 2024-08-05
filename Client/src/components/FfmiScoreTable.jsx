@@ -5,6 +5,8 @@ export default function FfmiScoreTable ({FFMI, Bfp, gender}){
     // State variable to track the current FFMI score
     const [FfmiScore, setFfmiScore] = useState('');
 
+    const flooredFfmi = Math.floor(FFMI);
+    const flooredBfp = Math.floor(Bfp);
     // Object storing the arrays for each genders interpretations
     const FfmiRanges = {
         "Male": [
@@ -31,7 +33,7 @@ useEffect(() => {
 
     // Iterates over the gender interpretations to check wich matches
     for(let i = 0; i < 6; i++){
-        if(FFMI >= rangeForCurrentGender[i].lowFFMI && FFMI <= rangeForCurrentGender[i].highFFMI && Bfp >= rangeForCurrentGender[i].lowBF && Bfp <= rangeForCurrentGender[i].highBF){
+        if(flooredFfmi >= rangeForCurrentGender[i].lowFFMI && flooredFfmi <= rangeForCurrentGender[i].highFFMI && flooredBfp >= rangeForCurrentGender[i].lowBF && flooredBfp <= rangeForCurrentGender[i].highBF){
             setFfmiScore(rangeForCurrentGender[i].category);
             return;
         }
