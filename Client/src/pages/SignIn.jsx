@@ -71,7 +71,7 @@ export default function Signin() {
         } catch (err) {
             if (err.message.includes('duplicate key') && err.message.includes('username')) {
                 // Handles duplicate username error
-                setErrorMessages({ username: `Username already taken try: ${userFormData.username}${Math.floor(Math.random() * 999) + 1} `});
+                setErrorMessages({ username: `Username already taken try: ${userFormData.username}${Math.floor(Math.random() * 999) + 1} ` });
                 console.error('An error occurred:', err.message, err);
             } else if (err.message.includes('duplicate key') && err.message.includes('email')) {
                 // Handles duplicate email error
@@ -109,7 +109,7 @@ export default function Signin() {
                         />
                         {errorMessages.username && <div className='text-danger'>{errorMessages.username}</div>}
                     </div>
-    
+
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email</label>
                         <input
@@ -123,7 +123,7 @@ export default function Signin() {
                         />
                         {errorMessages.email && <div className='text-danger'>{errorMessages.email}</div>}
                     </div>
-    
+
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Password</label>
                         <input
@@ -137,7 +137,7 @@ export default function Signin() {
                         />
                         {errorMessages.password && <div className='text-danger'>{errorMessages.password}</div>}
                     </div>
-    
+
                     <button
                         type="submit"
                         className="btn btn-primary"
@@ -147,20 +147,20 @@ export default function Signin() {
                     </button>
                 </form>
                 <div className='col-12 col-md-6 p-4'>
-                <div>
-        <h2>Join Tumorido Fittrack</h2>
-        <p>Start tracking your fitness journey today!</p>
-        <ul>
-            <li>Track your body measurements and lifting stats over time.</li>
-            <li>Visualize your progress with easy-to-understand charts.</li>
-            <li>Browse our extensive exercise database.</li>
-            <li>Calculate your calorie and macronutrient needs.</li>
-        </ul>
-        <p>Sign up now and take the first step towards achieving your fitness goals!</p>
-    </div>
+                    <div>
+                        <h2>Join Tumorido Fittrack</h2>
+                        <p>Start tracking your fitness journey today!</p>
+                        <ul>
+                            <li>Track your body measurements and lifting stats over time.</li>
+                            <li>Visualize your progress with easy-to-understand charts.</li>
+                            <li>Browse our extensive exercise database.</li>
+                            <li>Calculate your calorie and macronutrient needs.</li>
+                        </ul>
+                        <p>Sign up now and take the first step towards achieving your fitness goals!</p>
+                    </div>
                 </div>
             </div>
         </div>
     );
-    
+
 }
