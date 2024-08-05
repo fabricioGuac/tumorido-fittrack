@@ -50,9 +50,10 @@ export default function Login() {
     }
 
     return (
-        <div className="container logSign-forms">
-            <h2 className="my-4">Login</h2>
-            <form className='col-md-6' onSubmit={handleSubmit}>
+        <>
+        <h2 className="text-center mt-5">Login</h2>
+        <div className="logSign-forms">
+            <form className='col-12 col-md-6 p-4' onSubmit={handleSubmit}>
 
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email</label>
@@ -90,5 +91,6 @@ export default function Login() {
             </form>
             {errorMessage && <div className='text-danger'>{errorMessage}</div>}
         </div>
+        </>
     )
 }

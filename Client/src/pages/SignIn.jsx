@@ -92,9 +92,10 @@ export default function Signin() {
     };
 
     return (
-        <div className="container logSign-forms">
-            <h2 className="my-4">Sign In</h2>
-            <form onSubmit={handleSubmit}>
+        <>
+            <h2 className="text-center">Join today</h2>
+        <div className=" logSign-forms">
+            <form className='col-12 col-md-6 p-4' onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="username" className="form-label">Username</label>
                     <input
@@ -146,5 +147,6 @@ export default function Signin() {
                 </button>
             </form>
         </div>
+        </>
     );
 }
