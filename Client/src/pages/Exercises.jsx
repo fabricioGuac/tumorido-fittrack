@@ -95,7 +95,6 @@ export default function Exercises() {
                                 />
                                 <button className="btn btn-secondary" type="submit">
                                     <span role="img" aria-label="search" className="me-1">🔎</span>
-                                    Search
                                 </button>
                             </div>
                         </form>
