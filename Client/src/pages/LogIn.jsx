@@ -49,51 +49,6 @@ export default function Login() {
 
     }
 
-    // return (
-    //     <div className='container'>
-    //     <h2 className="text-center mt-5">Login</h2>
-    //     <div className="logSign-forms">
-    //         <form className='col-12 col-md-6 p-4' onSubmit={handleSubmit}>
-
-    //             <div className="mb-3">
-    //                 <label htmlFor="email" className="form-label">Email</label>
-    //                 <input
-    //                     type="email"
-    //                     id="email"
-    //                     name="email"
-    //                     className="form-control"
-    //                     placeholder="Your email"
-    //                     value={userFormData.email}
-    //                     onChange={handleInputChange}
-    //                 />
-    //             </div>
-
-    //             <div className="mb-3">
-    //                 <label htmlFor="password" className="form-label">Password</label>
-    //                 <input
-    //                     type="password"
-    //                     id="password"
-    //                     name="password"
-    //                     className="form-control"
-    //                     placeholder="Your password"
-    //                     value={userFormData.password}
-    //                     onChange={handleInputChange}
-    //                 />
-    //             </div>
-
-    //             <button
-    //                 type="submit"
-    //                 className="btn btn-primary"
-    //                 disabled={!(userFormData.email && userFormData.password)}
-    //             >
-    //                 Sign In
-    //             </button>
-    //         </form>
-    //         {errorMessage && <div className='text-danger'>{errorMessage}</div>}
-    //     </div>
-    //     </div>
-    // )
-
     return (
         <div className='container'>
             <h2 className="text-center">Login</h2>
