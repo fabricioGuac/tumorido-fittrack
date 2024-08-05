@@ -51,7 +51,7 @@ export default function Login() {
 
     return (
         <div className='container'>
-            <h2 className="text-center">Login</h2>
+            <h2 className="text-center mt-3">Login</h2>
             <div className="logSign-forms d-flex flex-column flex-md-row">
                 <form className='col-12 col-md-6 p-4 mt-4' onSubmit={handleSubmit}>
 

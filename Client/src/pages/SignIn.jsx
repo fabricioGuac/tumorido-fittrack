@@ -93,7 +93,7 @@ export default function Signin() {
 
     return (
         <div className='container'>
-            <h2 className="text-center">Sign in</h2>
+            <h2 className="text-center mt-3">Sign in</h2>
             <div className="logSign-forms d-flex flex-column flex-md-row">
                 <form className='col-12 col-md-6 p-4 mt-4' onSubmit={handleSubmit}>
                     <div className="mb-3">

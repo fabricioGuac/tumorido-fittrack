@@ -1,3 +1,13 @@
+
+@keyframes rainbow {
+  0% { color: red; }
+  20% { color: orange; }
+  40% { color: yellow; }
+  60% { color: green; }
+  80% { color: blue; }
+  100% { color: violet; }
+}
+
 body {
   overflow-x: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -58,6 +68,32 @@ a:hover {
   max-width: 500px;
   margin-bottom: 1rem; 
 }
+
+/* .logSign-forms ul {
+  color: #2af86f;
+  font-size: 20px;
+IDK
+} */
+
+.header  {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.nav-item {
+  margin-right: 1rem;
+}
+
+.nav-link {
+  padding: 1rem 1.5rem;
+  font-size: 1.5rem;
+  color: #eee;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  animation: rainbow 2s 1;
+} 
+
 
 @media (max-width: 767.98px) {
   .logSign-forms {

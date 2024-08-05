@@ -3,8 +3,8 @@ import Nav from "./Navbar";
 export default function Header () {
 
     return (
-        <div>
-        <h1>Title? Tumorido FittTrack? we'll see</h1>
+        <div className="header">
+        <h1 className="text-center p-2">Tumorido FitTrack</h1>
         <Nav />
         </div>
     )
