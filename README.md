@@ -10,12 +10,12 @@ N/A
 
 ## Usage
 
-
+FitTrack enables users to efficiently monitor their fitness progress by allowing them to input and track body metrics, such as measurements, weight, and gender, to calculate body fat percentage and visualize this data over time. Users can also log and analyze their lifting activities—including lift weight, exercise name, sets, and reps—through detailed graphs. The app features a comprehensive exercise database for searching exercises by muscle group or name, and offers personalized calorie and macronutrient recommendations based on user inputs and activity levels.
 
 
 ## Screenshot displaying the deployed app
 
-![]()
+![Screenshot of the body data graph](./client/public/bodyGraph.png)
 
 ## URL to the deployed app
 

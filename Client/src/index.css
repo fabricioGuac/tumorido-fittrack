@@ -295,12 +295,12 @@ IDK
   backdrop-filter: blur(7px);
 }
 
-/* ///////////////////////////////////////// */
 
+.homepage {
+  padding: 4rem;
+  backdrop-filter: blur(15px);
+}
 
-
-
-/* ///////////////////////////////////////// */
 
 @media (max-width: 768px) {
 
