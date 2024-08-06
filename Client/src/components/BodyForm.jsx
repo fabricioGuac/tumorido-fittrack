@@ -157,6 +157,13 @@ export default function BodyForm({setView}) {
         }
     }
 
+    if (loading){
+        return(
+        <div className="d-flex justify-content-center align-items-center vh-100">
+            <h2 className="text-primary">Loading...</h2>
+        </div>)
+    }
+
     return (
         <>
         {/* <div className='bg-secondary'> */}
