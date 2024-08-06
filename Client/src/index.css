@@ -313,6 +313,7 @@ IDK
 }
 
 .autoshow {
+  margin-bottom: 5rem;
   animation: autoshowAnimation both;
   animation-timeline: view(70% 5%);
 }

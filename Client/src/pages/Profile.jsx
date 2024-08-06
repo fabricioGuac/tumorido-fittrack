@@ -61,7 +61,10 @@ export default function Profile() {
     // }
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                <h2 className="text-primary">Loading...</h2>
+            </div>)
     }
 
     console.log(data);

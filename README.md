@@ -15,7 +15,7 @@ FitTrack enables users to efficiently monitor their fitness progress by allowing
 
 ## Screenshot displaying the deployed app
 
-![Screenshot of the body data graph](./client/public/bodyGraph.png)
+![Screenshot of the body data graph](./Client/public/bodyGraph.png)
 
 ## URL to the deployed app
 

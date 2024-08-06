@@ -13,7 +13,7 @@ export default function Homepage() {
                 </div>
             </div>
 
-            <div className="row mb-4 autoshow">
+            <div className="row autoshow">
                 <div className="col-md-6 d-flex">
                     <div className="">
                         <img src="/bodyGraph.png" alt="Example body graph" className="img-fluid" />
@@ -29,7 +29,7 @@ export default function Homepage() {
             </div>
 
 
-            <div className="row mb-4 autoshow">
+            <div className="row autoshow">
                 <div className="col-md-6 d-flex justify-content-center align-items-center">
                     <div className='text-center'>
 
@@ -45,7 +45,7 @@ export default function Homepage() {
             </div>
 
 
-            <div className="row mb-4 autoshow">
+            <div className="row autoshow">
                 <div className="col-md-6 d-flex">
                     <div className="">
                         <img src="/calMac.png" alt="Example calories and macronutrients recommendations" className="img-fluid" />
@@ -61,7 +61,7 @@ export default function Homepage() {
             </div>
 
 
-            <div className="row mb-4 autoshow">
+            <div className="row autoshow">
                 <div className="col-md-6 d-flex justify-content-center align-items-center">
                     <div className='text-center'>
 
