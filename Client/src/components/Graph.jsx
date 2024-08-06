@@ -42,6 +42,7 @@ export default function Graph({ title, units, data }) {
         ]
     };
 
+
     return (
         <div className="chart-container">
             {/* Displays the title */}
@@ -52,8 +53,9 @@ export default function Graph({ title, units, data }) {
                     plugins: {
                         title: {
                             display: true,
-                            // Set the title for the chart
-                            text: `Progress in ${title} over time`
+                            // Set the title for the chart and its color
+                            text: `Progress in ${title} over time`,
+                            color: '#FFFFFF'
                         },
                         legend: {
                             display: false
@@ -61,22 +63,40 @@ export default function Graph({ title, units, data }) {
                     },
                     responsive: true,
                     scales: {
-                        // Sets the titles in the x and y axis
                         x: {
                             title: {
                                 display: true,
-                                text: 'Time'
+                                text: 'Time',
+                                color: '#FFFFFF'
+                            },
+                            // Defines the color of the labels in the y axis
+                            ticks: {
+                                color: '#FFFFFF' 
+                            },
+                            // Defines the grid line in the y axis
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.2)' 
                             }
                         },
                         y: {
                             title: {
                                 display: true,
-                                text: units
+                                text: units,
+                                color: '#FFFFFF'
+                            },
+                            // Defines the color of the labels in the y axis
+                            ticks: {
+                                color: '#FFFFFF'
+                            },
+                            // Defines the grid line in the y axis
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.2)' 
                             }
                         }
-                    }
+                    },
                 }}
             />
         </div>
     );
+    
 }
