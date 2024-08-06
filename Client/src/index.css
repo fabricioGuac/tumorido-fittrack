@@ -45,12 +45,12 @@ a:hover {
   overflow-y: auto; 
   border: 1px solid #ddd;
   padding: 10px;
+  scrollbar-width: thin;
 }
 
 .history-item {
   margin-bottom: 10px;
 }
-
 
 .graph-nav {
   padding: 1rem; 
@@ -245,4 +245,18 @@ IDK
 .username {
   font-size: 1.6rem ;
 }
+
+.BLData-container {
+  flex-direction: column;
+}
+
+.history-container {
+  max-height: 40vh;
+  margin-top: 0;
+}
+
+.chart-container {
+  width: 100%;
+}
+
 }
