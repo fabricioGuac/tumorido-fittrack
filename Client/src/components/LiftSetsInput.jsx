@@ -26,7 +26,7 @@ export default function LiftSetInput ({index, set, onChange, removeSet }){
             />
             <button
                 type="button"
-                className='btn btn-danger'
+                className='btn btn-danger mt-2'
                 onClick={() => removeSet(index)}
             >
                 Remove Set

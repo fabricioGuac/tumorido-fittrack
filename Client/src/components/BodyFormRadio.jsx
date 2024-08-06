@@ -6,7 +6,7 @@ export default function BodyFormRadio({ sex, measureUnit, massUnit, handleRadioC
 
     return (
         <>
-            <div>
+            <div className='radio-group'>
                 <label>
                     <input
                         type="radio"
@@ -18,7 +18,7 @@ export default function BodyFormRadio({ sex, measureUnit, massUnit, handleRadioC
                     />
                     Male
                 </label>
-                <label className='mx-2'>
+                <label>
                     <input
                         type="radio"
                         value="Female"
@@ -30,8 +30,8 @@ export default function BodyFormRadio({ sex, measureUnit, massUnit, handleRadioC
                     Female
                 </label>
             </div>
-            <div>
-                <label>
+            <div className='radio-group'>
+                <label >
                     <input
                         type="radio"
                         value="cm"
@@ -42,7 +42,7 @@ export default function BodyFormRadio({ sex, measureUnit, massUnit, handleRadioC
                     />
                     cm
                 </label>
-                <label className='mx-2'>
+                <label >
                     <input
                         type="radio"
                         value="in"
@@ -54,8 +54,8 @@ export default function BodyFormRadio({ sex, measureUnit, massUnit, handleRadioC
                     in
                 </label>
             </div>
-            <div>
-                <label>
+            <div className='radio-group'>
+                <label >
                     <input
                         type="radio"
                         value="lbs"
@@ -66,7 +66,7 @@ export default function BodyFormRadio({ sex, measureUnit, massUnit, handleRadioC
                     />
                     lbs
                 </label>
-                <label className='mx-2'>
+                <label >
                     <input
                         type="radio"
                         value="kg"
@@ -79,5 +79,5 @@ export default function BodyFormRadio({ sex, measureUnit, massUnit, handleRadioC
                 </label>
             </div>
         </>
-    )
+    );
 }

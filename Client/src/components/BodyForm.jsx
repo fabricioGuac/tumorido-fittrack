@@ -159,12 +159,14 @@ export default function BodyForm({setView}) {
 
     return (
         <>
+        {/* <div className='bg-secondary'> */}
             <BodyFormRadio
                 sex={radios.sex}
                 measureUnit={radios.measureUnit}
                 massUnit={radios.massUnit}
                 handleRadioChange={handleRadioChange}
             />
+        {/* </div> */}
             <div className='container'>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="height" className="form-label">Height</label>
@@ -225,7 +227,7 @@ export default function BodyForm({setView}) {
                                 placeholder='waist'
                                 className='form-control'
                             /> </>}
-                        <button className='btn btn-primary mx-2' type="submit" disabled={loading}>
+                        <button className='btn btn-primary  mt-2' type="submit" disabled={loading}>
                         {loading ? 'Submitting...' : 'Submit'}
                         </button>
                 </form>
