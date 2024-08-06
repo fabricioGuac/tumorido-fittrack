@@ -31,6 +31,21 @@ select:hover {
   cursor: pointer;
 }
 
+
+table {
+  width: 100%; 
+  border-collapse: collapse; 
+  margin: 0 auto;
+}
+
+
+th, td {
+  border: 1px solid #ddd; 
+  padding: 8px; 
+  text-align: center;
+}
+
+
 a:hover {
   cursor: pointer;
 }
@@ -265,6 +280,10 @@ IDK
   text-align: center;
 }
 
+
+.ffmi-table h2{
+  text-align: center;
+}
 
 @media (max-width: 768px) {
 

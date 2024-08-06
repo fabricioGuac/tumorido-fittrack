@@ -123,10 +123,10 @@ export default function CalorieCalc({ latestData, latestFFMI, height }) {
                             <h3>Basic metabolic rate: {Math.round(calMacCalcData.BMR)}cals</h3>
                             <h3>Maintenance calories: {Math.round(calMacCalcData.TDEE)}cals</h3>
                             <p>Add or take 200 to 500cals to the maintenance calories if you want to gain or lose weight</p>
-                            <h4>Recommended protein intake: {calMacCalcData.avgRecProtIntake}g</h4>
-                            <h4>Recommended carbs intake: {calMacCalcData.recomCarbsIntake}g</h4>
-                            <h4>Recommended fats intake: {calMacCalcData.recomFatIntake}g</h4>
-                            <h4>Range of protein grams {calMacCalcData.recomendedProteinRange[0]}g and {calMacCalcData.recomendedProteinRange[1]}g</h4>
+                            <h4>Recommended protein 🥩 🍗 intake: {calMacCalcData.avgRecProtIntake}g</h4>
+                            <h4>Recommended carbs 🍞 🥔 intake: {calMacCalcData.recomCarbsIntake}g</h4>
+                            <h4>Recommended fats 🥑 🧈 intake: {calMacCalcData.recomFatIntake}g</h4>
+                            <h4>Range of protein grams {calMacCalcData.recomendedProteinRange[0]}g and {calMacCalcData.recomendedProteinRange[1]}g 🥚 🐟</h4>
                         </div>
                     )}
                 </div>
