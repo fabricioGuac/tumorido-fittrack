@@ -61,22 +61,21 @@ export default function BodyData({ bodyData, height }) {
                 </div>
 
                 <div className="chart-container">
-                    <nav className="navbar navbar-expand-lg bg-light">
+                    <nav className="graph-nav">
                         <div className="container">
-                            <ul className="navbar-nav mx-auto">
-                                <li className={`nav-item ${graphTarget === "FFMI" ? "active" : ''}`} onClick={() => setGraphTarget("FFMI")}>
-                                    <a className="nav-link">FFMI</a>
+                            <ul className="graph-nav-list">
+                                <li className={`graph-nav-item ${graphTarget === "FFMI" ? "activeGraph" : ''}`} onClick={() => setGraphTarget("FFMI")}>
+                                    <button className="graph-nav-button">FFMI</button>
                                 </li>
-                                <li className={`nav-item ${graphTarget === "weight" ? "active" : ''}`} onClick={() => setGraphTarget("weight")}>
-                                    <a className="nav-link">Weight</a>
+                                <li className={`graph-nav-item ${graphTarget === "weight" ? "activeGraph" : ''}`} onClick={() => setGraphTarget("weight")}>
+                                    <button className="graph-nav-button">Weight</button>
                                 </li>
-                                <li className={`nav-item ${graphTarget === "bodyFatPercentage" ? "active" : ''}`} onClick={() => setGraphTarget('bodyFatPercentage')}>
-                                    <a className="nav-link">BF%</a>
+                                <li className={`graph-nav-item ${graphTarget === "bodyFatPercentage" ? "activeGraph" : ''}`} onClick={() => setGraphTarget('bodyFatPercentage')}>
+                                    <button className="graph-nav-button">BF%</button>
                                 </li>
                             </ul>
                         </div>
                     </nav>
-
 
                     {graphTarget === "FFMI" && <Graph title="Fat Free Mass Index" units="FFMI" data={graphData} />}
                     {graphTarget === "bodyFatPercentage" && <Graph title="Body Fat Percentage" units="BF%" data={graphData} />}
@@ -84,7 +83,7 @@ export default function BodyData({ bodyData, height }) {
                 </div>
             </div>
             <div>
-                <CalorieCalc latestData={bodyData[0]} latestFFMI={calculateFFMI(bodyData[0].weight, bodyData[0].bodyFatPercentage )} height={height} />
+                <CalorieCalc latestData={bodyData[0]} latestFFMI={calculateFFMI(bodyData[0].weight, bodyData[0].bodyFatPercentage)} height={height} />
             </div>
         </>
     )

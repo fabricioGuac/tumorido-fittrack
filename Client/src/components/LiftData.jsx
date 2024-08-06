@@ -12,11 +12,11 @@ export default function LiftData({ liftOptions, liftsData }) {
 
     useEffect(() => {
         const filteredLifts = liftsData.filter(lift => lift.exercise === selectedLift);
-    
+
         const result = filteredLifts.reduce((acc, item) => {
             // Formats the date
-            acc.dates.push(new Date(item.date).toLocaleDateString()); 
-    
+            acc.dates.push(new Date(item.date).toLocaleDateString());
+
             if (graphTarget === 'totalWeightLifted') {
                 acc.values.push(item.totalWeightLifted);
             } else if (graphTarget === 'reps' || graphTarget === 'weight') {
@@ -26,7 +26,7 @@ export default function LiftData({ liftOptions, liftsData }) {
                     acc.values.push(graphTarget === 'reps' ? firstSet.reps : firstSet.weight);
                 } else {
                     // If there are no sets pushes 0
-                    acc.values.push(0); 
+                    acc.values.push(0);
                 }
             } else if (graphTarget === 'sets') {
                 // Counts the number of sets
@@ -34,7 +34,7 @@ export default function LiftData({ liftOptions, liftsData }) {
             }
             return acc;
         }, { dates: [], values: [] });
-    
+
         setGraphdata(result);
     }, [selectedLift, graphTarget]);
 
@@ -58,47 +58,47 @@ export default function LiftData({ liftOptions, liftsData }) {
             </select>
             <div className="BLData-container">
                 <div className="history-container">
-                {liftsData.map((item) => (
-                    <div key={item._id}>
-                        <details>
-                            <summary>{`${item.exercise} - ${new Date(item.date).toLocaleDateString()}`}</summary>
-                            <p>Total Weight Lifted: {item.totalWeightLifted} kg</p>
-                            <div>
-                                {item.sets.map((set, index) => (
-                                    <p key={index}>Set {index + 1}: {set.reps} reps with {set.weight} kg</p>
-                                ))}
-                            </div>
-                        </details>
-                    </div>
-                ))}
+                    {liftsData.map((item) => (
+                        <div key={item._id}>
+                            <details>
+                                <summary>{`${item.exercise} - ${new Date(item.date).toLocaleDateString()}`}</summary>
+                                <p>Total Weight Lifted: {item.totalWeightLifted} kg</p>
+                                <div>
+                                    {item.sets.map((set, index) => (
+                                        <p key={index}>Set {index + 1}: {set.reps} reps with {set.weight} kg</p>
+                                    ))}
+                                </div>
+                            </details>
+                        </div>
+                    ))}
                 </div>
-                
+
                 <div className="chart-container">
-                <nav className="navbar navbar-expand-lg bg-light">
-                    <div className="container">
-                        <ul className="navbar-nav mx-auto">
-                            <li className={`nav-item ${graphTarget === "totalWeightLifted" ? "active" : ''}`} onClick={() => setGraphTarget("totalWeightLifted")}>
-                                <a className="nav-link">Total Weight Lifted</a>
-                            </li>
-                            <li className={`nav-item ${graphTarget === "reps" ? "active" : ''}`} onClick={() => setGraphTarget("reps")}>
-                                <a className="nav-link">Reps</a>
-                            </li>
-                            <li className={`nav-item ${graphTarget === "weight" ? "active" : 'weight'}`} onClick={() => setGraphTarget('weight')}>
-                                <a className="nav-link">Weight</a>
-                            </li>
-                            <li className={`nav-item ${graphTarget === "sets" ? "active" : 'weight'}`} onClick={() => setGraphTarget('sets')}>
-                                <a className="nav-link">Sets</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+                    <nav className="graph-nav">
+                        <div className="container">
+                            <ul className="graph-nav-list">
+                                <li className={`graph-nav-item ${graphTarget === "totalWeightLifted" ? "activeGraph" : ''}`} onClick={() => setGraphTarget("totalWeightLifted")}>
+                                    <button className="graph-nav-button">T W L</button>
+                                </li>
+                                <li className={`graph-nav-item ${graphTarget === "reps" ? "activeGraph" : ''}`} onClick={() => setGraphTarget("reps")}>
+                                    <button className="graph-nav-button">Reps</button>
+                                </li>
+                                <li className={`graph-nav-item ${graphTarget === "weight" ? "activeGraph" : ''}`} onClick={() => setGraphTarget('weight')}>
+                                    <button className="graph-nav-button">Weight</button>
+                                </li>
+                                <li className={`graph-nav-item ${graphTarget === "sets" ? "activeGraph" : ''}`} onClick={() => setGraphTarget('sets')}>
+                                    <button className="graph-nav-button">Sets</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
 
 
-                {graphTarget === "totalWeightLifted" && <Graph title="Total Weight Lifted" units="kg" data={graphData} />}
-                {graphTarget === "reps" && <Graph title="Reps in the first set" units="Reps" data={graphData} />}
-                {graphTarget === "weight" && <Graph title="Weight in the first set" units="kg" data={graphData} />}
-                {graphTarget === "sets" && <Graph title="Set count for this lift" units="Sets" data={graphData} />}
-            </div>
+                    {graphTarget === "totalWeightLifted" && <Graph title="Total Weight Lifted" units="kg" data={graphData} />}
+                    {graphTarget === "reps" && <Graph title="Reps in the first set" units="Reps" data={graphData} />}
+                    {graphTarget === "weight" && <Graph title="Weight in the first set" units="kg" data={graphData} />}
+                    {graphTarget === "sets" && <Graph title="Set count for this lift" units="Sets" data={graphData} />}
+                </div>
 
             </div>
         </>
