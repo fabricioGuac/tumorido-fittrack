@@ -21,6 +21,16 @@ body {
   min-height: 100vh;
 }
 
+select {
+  background-color: #b4b1b1;
+  border-radius: 25px;
+  margin-left: 1rem;
+}
+
+select:hover {
+  cursor: pointer;
+}
+
 a:hover {
   cursor: pointer;
 }
@@ -196,6 +206,63 @@ IDK
   background-color: rgb(44, 15, 173);
   border-radius: 25px;
   font-weight: 700;
+}
+
+.body-data-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 20px;
+}
+
+.latest-data-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.latest-data, .form {
+  background-color: #1e2a38; 
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #333; 
+}
+
+.results {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.results > div {
+  background-color: #2b3a4d; 
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #444; 
+}
+
+.cal-btn {
+  margin-top: 1rem;
+  background-color: #007bff; 
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cal-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.num-input {
+  border-radius: 25px;
+  margin-left: 1rem;
+  background-color: #b4b1b1;
+  text-align: center;
 }
 
 
