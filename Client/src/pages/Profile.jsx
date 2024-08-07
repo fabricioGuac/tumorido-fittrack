@@ -8,6 +8,7 @@ import BodyForm from '../components/BodyForm';
 import LiftForm from '../components/LiftForm';
 import LiftData from '../components/LiftData';
 import BodyData from '../components/BodyData';
+import Pfp from '../components/Pfp';
 
 import { useQuery, useMutation } from "@apollo/client";
 
@@ -80,7 +81,8 @@ export default function Profile() {
                             <h2 className='username'>{data?.me.username}</h2>
                             {/* <img src={data?.me.profilePic} alt="profile picture" className='img-fluid' /> */}
                             {/* <input type="file" accept="image/*" onChange={handlePfpUpload} /> */}
-                            <img src={userPfp} alt="profile picture" className='img-fluid rounded-circle mb-4 pfp' />
+                            {/* <img src={userPfp} alt="profile picture" className='img-fluid rounded-circle mb-4 pfp' /> */}
+                            <Pfp userPfp={userPfp} />
 
                             {errorMessage && <div className='text-danger'>{errorMessage}</div>}
                             <ul className='profile-nav'>

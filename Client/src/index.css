@@ -318,6 +318,22 @@ IDK
   animation-timeline: view(70% 5%);
 }
 
+/* ////////////////////////////////////////////// */
+/* .pfp {
+  width: 250px; 
+  height: 250px; 
+  cursor: pointer;
+} */
+
+ .pfp:hover {
+  cursor: pointer;
+
+  border: solid 3px blue;
+} 
+ 
+
+/* ////////////////////////////////////////////// */
+
 
 @media (max-width: 768px) {
 
