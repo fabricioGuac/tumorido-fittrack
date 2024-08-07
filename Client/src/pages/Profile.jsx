@@ -48,7 +48,8 @@ export default function Profile() {
 
     // const [setPfp, { error }] = useMutation(SET_PFP);
 
-    // const handlePfpUpload = async () => {
+    const handlePfpUpload = async () => {
+        // console.log()
     //     try {
     //         const {data} = await setPfp({
     //             variables:{ file: pfp }
@@ -58,7 +59,7 @@ export default function Profile() {
     //         console.log(err.message);
     //         setErrorMessage("There was a problem uploading the profile picture");
     //     }
-    // }
+    }
 
     if (loading) {
         return (

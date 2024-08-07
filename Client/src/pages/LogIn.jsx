@@ -88,8 +88,8 @@ export default function Login() {
                     >
                         Sign In
                     </button>
+                {errorMessage && <div className='text-danger'><h4>{errorMessage}</h4></div>}
                 </form>
-                {errorMessage && <div className='text-danger'>{errorMessage}</div>}
                 <div className='col-12 col-md-6 p-4'>
                     <div>
                         <h2>Welcome Back to Tumorido Fittrack</h2>
