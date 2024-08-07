@@ -35,8 +35,8 @@ class AuthService {
     login(idToken) {
         // save user token to localStorage
         localStorage.setItem('id_token', idToken);
-        // this will reload the page and reset the state of the application
-        window.location.assign('/');
+        // this will reload the page and send the user to the profile page
+        window.location.assign('/profile');
     }
 
     // Function to log an user out
