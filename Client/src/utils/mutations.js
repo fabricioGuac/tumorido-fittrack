@@ -47,4 +47,10 @@ export const SEND_PRESIGNED_URL = gql`
         sendPreSignedUrl(filename: $filename, contentType: $contentType)
     }
 `
+
+export const SET_USER_PFP = gql`
+    mutation setUserPfp($url: String!){
+        setUserPfp(url: $url)
+    }
+`
 ;

@@ -7,6 +7,7 @@ query me {
         username
         email
         height
+        pfp
         lift {
             _id
             exercise

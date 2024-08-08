@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { useDropzone } from 'react-dropzone';
 import { useMutation } from "@apollo/client";
 
-import {SEND_PRESIGNED_URL} from "../utils/mutations";
+import {SEND_PRESIGNED_URL, SET_USER_PFP} from "../utils/mutations";
 
 
 export default function Pfp ({userPfp}) {
@@ -13,6 +13,9 @@ export default function Pfp ({userPfp}) {
 
     // Mutation to get a presigned URL for uploading
     const [sendPreSignedUrl , {error}] = useMutation(SEND_PRESIGNED_URL);
+    // Mutation to set the new profile picture to the user
+    const [setPfp, {error: setPfpError}] = useMutation(SET_USER_PFP);
+
 
     // Function to handle file drops
     const onDrop = useCallback( async acceptedFiles => {
@@ -48,11 +51,21 @@ export default function Pfp ({userPfp}) {
                     throw new Error ('Failed to post the new profile picture');
                 }
 
-                console.log(AWSresponse.url);
-                console.log('/////////////////////')
-                console.log(presignedUrl.split('?')[0]);
-                // Updates the profile picture URL
-                setSelectedImg(presignedUrl.split('?')[0]);
+                // console.log(AWSresponse.url);
+                // console.log('/////////////////////')
+                // console.log(presignedUrl.split('?')[0]);
+
+                // Updates the user profile picture tp the new image s3 URL
+                const {data: pfpUpdateData} = await setPfp({
+                    variables: {url:presignedUrl.split('?')[0] }
+                })
+
+                // If the response id true it will update the profile picture
+                if(pfpUpdateData.setUserPfp){
+
+                    // Updates the profile picture URL
+                    setSelectedImg(presignedUrl.split('?')[0]);
+                }
             } catch (err) {
                 console.log(err);
                 setErrorMessage(err.message);

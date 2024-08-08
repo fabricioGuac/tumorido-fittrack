@@ -217,10 +217,10 @@ const resolvers = {
                 const params = {
                     Bucket: 'tumorido',
                     Key: `pfp/${filename}`,
-                    Expires: 60, 
+                    Expires: 60,
                     ContentType: contentType
                 };
-                
+
                 try {
                     // Generates a presigned URL for uploading an object to the specified bucket
                     return await s3.getSignedUrlPromise('putObject', params);
@@ -232,16 +232,34 @@ const resolvers = {
 
             throw AuthError;
         },
+        // Updates the user profile picture
+        setUserPfp: async (parent, { url }, context) => {
+            if (context.user) {
+                try {
+                    // Updates the user pfp tp the new one and returns the object before the update
+                    const user = await User.findByIdAndUpdate(context.user._id, { $set: { pfp: url } });
 
-        // setUserPfp:async(parent,{url}, context) => {
-        //     const user = await User.findById
+                    // If the user had a previous profile picture deletes it from the s3 bucket
+                    if (user.pfp) {
+                        // Gets the object ey from the image URL
+                        const key = user.pfp.split('/').slice(-1)[0];
+                        // Sets the params for the s3 deletion
+                        const delParams = { Bucket: 'tumorido', Key: `pfp/${key}` }
+                        // Makes a request to the s3 bucket to delete the object
+                        await s3.deleteObject(delParams).promise();
 
-        //     // s3.delete their current pfp if any
+                    }
 
-        //     user.update({pfp:url});
+                // If the operation secceeds returns true
+                return true;
 
-        //     return true or false if the update is successful?
-        // }
+                } catch (err) {
+                    console.log(err);
+                    throw new Error('Error updating the profile picture')
+                }
+            }
+        throw AuthError;
+        }
     }
 }
 

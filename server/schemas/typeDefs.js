@@ -45,6 +45,7 @@ type User {
     body: [Body]
     lift: [Lift]
     height: Float
+    pfp: String
     }
 
 
@@ -67,6 +68,7 @@ type Mutation {
     addLift(exercise: String!, sets: [SetInput!]!): User
 
     sendPreSignedUrl(filename: String!, contentType: String!): String
+    setUserPfp(url: String!): Boolean
 }
 
 `
