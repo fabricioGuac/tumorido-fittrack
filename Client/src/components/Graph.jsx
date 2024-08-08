@@ -3,8 +3,8 @@ import { Line } from "react-chartjs-2";
 
 export default function Graph({ title, units, data }) {
 
-    console.log(data.dates);
-    console.log(data.values);
+    // console.log(data.dates);
+    // console.log(data.values);
     // Initializes variables to store reversed arrays
     let reversedDates = [];
     let reversedValues = [];
@@ -13,12 +13,12 @@ export default function Graph({ title, units, data }) {
     if (Array.isArray(data.dates) && Array.isArray(data.values)) {
          // Reverses the arrays to display the data from earliest on the left to latest on the right
         reversedDates = [...data.dates].reverse();
-        console.log("REVERSED DATES:");
-        console.log(reversedDates);
+        // console.log("REVERSED DATES:");
+        // console.log(reversedDates);
 
         reversedValues = [...data.values].reverse();
-        console.log("REVERSED VALUES:");
-        console.log(reversedValues);
+        // console.log("REVERSED VALUES:");
+        // console.log(reversedValues);
 
     } else {
         console.log("Data dates and values are not arrays.");

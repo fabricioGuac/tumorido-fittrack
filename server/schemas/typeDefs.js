@@ -1,6 +1,7 @@
 
 const typeDefs = `
 scalar Date
+scalar Upload
 
 input SetInput {
     reps: Float!
@@ -64,6 +65,8 @@ type Mutation {
     
     addBody(weight:Float!, bodyFatPercentage: Float!, height: Int!): User
     addLift(exercise: String!, sets: [SetInput!]!): User
+
+    sendPreSignedUrl(filename: String!, contentType: String!): String
 }
 
 `

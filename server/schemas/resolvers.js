@@ -1,6 +1,10 @@
 const { User, Body, Lift } = require('../models');
 const { signToken, AuthError } = require('../utils/auth');
+const s3 = require('../config/awsConfig');
+
 const dateScalar = require('./scalars');
+
+// Upload: GraphQLUpload,
 
 const resolvers = {
     Date: dateScalar,
@@ -10,16 +14,16 @@ const resolvers = {
             if (context.user) {
                 try {
                     const user = await User.findOne({ _id: context.user._id })
-        .populate({ path: 'lift', options: { sort: { date: -1 } } })
-        .populate({ path: 'body', options: { sort: { date: -1 } } }).lean();
-                    
-        user.lift = user.lift.map(lift => ({
-            ...lift,
-            totalWeightLifted: lift.sets.reduce((total, set) => total + (set.weight * set.reps), 0).toFixed(2)
-        }))
+                        .populate({ path: 'lift', options: { sort: { date: -1 } } })
+                        .populate({ path: 'body', options: { sort: { date: -1 } } }).lean();
+
+                    user.lift = user.lift.map(lift => ({
+                        ...lift,
+                        totalWeightLifted: lift.sets.reduce((total, set) => total + (set.weight * set.reps), 0).toFixed(2)
+                    }))
 
 
-        return user;
+                    return user;
                 } catch (err) {
                     return `NO GOOD ${err}`;
                 }
@@ -204,7 +208,40 @@ const resolvers = {
 
             // Returns the modifies user
             return user;
-        }
+        },
+
+        // Generates and returns a presigned URL for uploading an object to the S3 bucket
+        sendPreSignedUrl: async (parent, { filename, contentType }, context) => {
+            if (context.user) {
+                // Defines the parameters such as bucket name, key under wich the object will be stored, url expiration in seconds and mimetype of the file
+                const params = {
+                    Bucket: 'tumorido',
+                    Key: `pfp/${filename}`,
+                    Expires: 60, 
+                    ContentType: contentType
+                };
+                
+                try {
+                    // Generates a presigned URL for uploading an object to the specified bucket
+                    return await s3.getSignedUrlPromise('putObject', params);
+                } catch (err) {
+                    console.log(err)
+                    throw new Error('Error generating presigned URL');
+                }
+            }
+
+            throw AuthError;
+        },
+
+        // setUserPfp:async(parent,{url}, context) => {
+        //     const user = await User.findById
+
+        //     // s3.delete their current pfp if any
+
+        //     user.update({pfp:url});
+
+        //     return true or false if the update is successful?
+        // }
     }
 }
 

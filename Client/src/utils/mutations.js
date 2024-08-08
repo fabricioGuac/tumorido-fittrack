@@ -40,4 +40,11 @@ export const ADD_LIFT = gql`
             username
         }
     }
-`;
+`
+
+export const SEND_PRESIGNED_URL = gql`
+    mutation sendPreSignedUrl($filename: String!, $contentType: String!){
+        sendPreSignedUrl(filename: $filename, contentType: $contentType)
+    }
+`
+;
