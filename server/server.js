@@ -40,6 +40,10 @@ const apolloServerStarter = async () => {
     // Sets client/build as static assets in production
     if (process.env.NODE_ENV === 'production') {
         app.use(express.static(path.join(__dirname, '../Client/dist')));
+
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+        });
     }
 
     // Connects to the mongo database and starts the express server
