@@ -29,7 +29,7 @@ export default function Signin() {
         const emailError = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userFormData.email) ? '' : 'Must be a valid email';
 
         // Check that the username lenght
-        const usernameError = userFormData.length > 50 ? '' : 'Username must be under 50 characters long'
+        const usernameError = userFormData.username.length <= 50 ? '' : 'Username must be under 50 characters long'
 
         // Check with regex for each password requirement
         const hasMinLength = userFormData.password.length >= 8;
