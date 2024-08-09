@@ -54,7 +54,7 @@ export default function Signin() {
         // Set the error messages if any
         setErrorMessages({ email: emailError, password: passwordError, username: usernameError });
 
-        if (emailError || passwordError) {
+        if (emailError || passwordError || usernameError) {
             // Stop the form submission if validation fails
             return;
         }

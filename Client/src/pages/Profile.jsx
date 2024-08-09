@@ -47,20 +47,6 @@ export default function Profile() {
         })
     })
 
-    // const [setPfp, { error }] = useMutation(SET_PFP);
-
-    const handlePfpUpload = async () => {
-        // console.log()
-    //     try {
-    //         const {data} = await setPfp({
-    //             variables:{ file: pfp }
-    //         });
-
-    //     } catch (err) {
-    //         console.log(err.message);
-    //         setErrorMessage("There was a problem uploading the profile picture");
-    //     }
-    }
 
     if (loading) {
         return (
@@ -79,9 +65,7 @@ export default function Profile() {
                         <div className='row text-center'>
                             
                             <h2 className='username'>{data?.me.username}</h2>
-                            {/* <img src={data?.me.profilePic} alt="profile picture" className='img-fluid' /> */}
-                            {/* <input type="file" accept="image/*" onChange={handlePfpUpload} /> */}
-                            {/* <img src={userPfp} alt="profile picture" className='img-fluid rounded-circle mb-4 pfp' /> */}
+
                             <Pfp userPfp={userPfp} />
 
                             {errorMessage && <div className='text-danger'>{errorMessage}</div>}
