@@ -13,6 +13,8 @@ export default function BodyForm({setView}) {
     const [radios, setRadios] = useState({ sex: 'Male', measureUnit: 'cm', massUnit: 'kg' })
     const [form, setForm] = useState({ height: '', weight: '', neck: '', abdomen: '', waist: '' });
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+
 
     // Mutation to add body metrics
     const [addBody, { error, loading }] = useMutation(ADD_BODY, {
@@ -150,7 +152,7 @@ export default function BodyForm({setView}) {
             // Empties the form after a successfull submision
             setForm({ height: '', weight: '', neck: '', abdomen: '', waist: '' });
             setErrorMessage('');
-            setView('bodyData');
+            setSuccessMessage('Body data added successfully!');
         } catch (err) {
             console.log(err);
             setErrorMessage(err.message);
@@ -239,6 +241,7 @@ export default function BodyForm({setView}) {
                         </button>
                 </form>
                 {errorMessage && <div className='text-danger'><h4>{errorMessage}</h4></div>}
+                {successMessage && <div className='text-success'><h4>{successMessage}</h4></div>}
             </div>
         </>
     )

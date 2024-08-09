@@ -6,6 +6,7 @@ import LiftUnitInput from './LiftUnitInput';
 
 import { useMutation } from '@apollo/client';
 
+import { GET_ME } from '../utils/queries';
 import { ADD_LIFT } from '../utils/mutations';
 
 export default function LiftForm({ liftOptions }) {
@@ -18,7 +19,11 @@ export default function LiftForm({ liftOptions }) {
     const [suggestions, setSuggestions] = useState([]);
     const [selectedSuggestion, setSelectedSuggestion] = useState(0)
 
-    const [addLift, { error, loading }] = useMutation(ADD_LIFT);
+    const [addLift, { error, loading }] = useMutation(ADD_LIFT, {
+        refetchQueries: [
+            { query: GET_ME }
+        ],
+    });
 
     const handleAddSet = () => {
         setSets([...sets, { reps: '', weight: '' }]);
