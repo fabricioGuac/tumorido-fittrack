@@ -19,6 +19,7 @@ FitTrack enables users to efficiently monitor their fitness progress by allowing
 
 ## URL to the deployed app
 
+https://tumorido-fittrack.onrender.com
 
 ## Credits
 
