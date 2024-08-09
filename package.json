@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cd server && npm run watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "cd client && npm i && cd ../server && npm i",
+    "install": "cd server && npm i && cd ../Client && npm i",
     "build": "cd client && npm run build",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "render-build":"npm install && npm run build"
