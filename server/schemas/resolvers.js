@@ -250,14 +250,57 @@ const resolvers = {
                 throw AuthError;
             }
 
-            const newMessage = await Message.create({
-                content,
-                sender: context.user._id,
-                receiver: receiver || null,
-                chatroom: chatroom || null,
-            });
+            try {
+                
+                const newMessage = await Message.create({
+                    content,
+                    sender: context.user._id,
+                    receiver: receiver || null,
+                    chatroom: chatroom || null,
+                });
+    
+                return newMessage;
+            } catch (err) {
+                throw new Error('Error sending message: ' + err.message);
+            }
+        },
 
-            return newMessage;
+        // Mutation to create a chatroom
+        createChatroom: async (parent, {name}, context) => {
+            if (!context.user){
+                throw AuthError;
+            }
+            try {
+                const newChatroom = await Chatroom.create({
+                    name,
+                    members: [context.user._id], // Use an array to start with one member
+                });
+        
+                return newChatroom;
+            } catch (err) {
+                throw new Error('Error creating chatroom: ' + err.message);
+            }
+        },
+
+        joinChatroom: async (parent, {chatroom}, context) => {
+            if (!context.user){
+                throw AuthError;
+            }
+            try {
+                const updatedChatroom = await Chatroom.findByIdAndUpdate(
+                    chatroom,
+                    { $addToSet: { members: context.user._id } },
+                    { new: true } // Return the updated document
+                );
+        
+                if (!updatedChatroom) {
+                    throw new Error('Chatroom not found');
+                }
+        
+                return updatedChatroom;
+            } catch (err) {
+                throw new Error('Error joining chatroom: ' + err.message);
+            }
         }
     }
 }

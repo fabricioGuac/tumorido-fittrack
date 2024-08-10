@@ -7,6 +7,23 @@ input SetInput {
     weight: Float!
 }
 
+type Message {
+    _id: ID!
+    content: String!
+    date: Date!
+    sender: ID!
+    receiver: ID
+    chatroom: ID
+}
+
+type Chatroom {
+    _id: ID
+    name: String
+    members: [ID]
+}
+
+
+
 type Exercise {
     name: String
     type: String
@@ -47,6 +64,10 @@ type User {
     pfp: String
     }
 
+type ChatOptions {
+    users: [User]
+    chatrooms: [Chatroom]
+}
 
 type Auth {
     token: ID!
@@ -57,6 +78,10 @@ type Query {
     me: User
     getExerciseByName(name:String!): [Exercise]
     getExerciseByMuscle(muscle:String!): [Exercise]
+
+    getChat(userId: ID!): [Message]
+    getChatroomMessages(chatroomId: ID!):[Messages]
+    getChatOptions:[ChatOptions]
 }
 
 type Mutation {
@@ -69,7 +94,9 @@ type Mutation {
     sendPreSignedUrl(filename: String!, contentType: String!): String
     setUserPfp(url: String!): Boolean
 
-    sendMessage:(content: String!, receiver: ID, chatroom: ID): Message
+    sendMessage(content: String!, receiver: ID, chatroom: ID): Message
+    createChatroom(name: String!): Chatroom
+    joinChatroom(chatroom: ID!): Chatroom
 }
 
 `
