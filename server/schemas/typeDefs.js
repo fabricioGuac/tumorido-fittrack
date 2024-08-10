@@ -80,7 +80,7 @@ type Query {
     getExerciseByMuscle(muscle:String!): [Exercise]
 
     getChat(userId: ID!): [Message]
-    getChatroomMessages(chatroomId: ID!):[Messages]
+    getChatroomMessages(chatroomId: ID!):[Message]
     getChatOptions:[ChatOptions]
 }
 

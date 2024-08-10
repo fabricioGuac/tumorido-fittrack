@@ -50,3 +50,44 @@ export const GET_EXERCISE_BY_MUSCLE = gql`
         }
     }
 `;
+
+export const GET_CHAT = gql`
+    query getChat($userId: ID!) {
+        getChat(userId: $userId) {
+            _id
+            content
+            date
+            sender
+            receiver
+        }
+    }
+`;
+
+export const GET_CHATROOM = gql`
+    query getChatroomMessages($chatroomId: ID!){
+        getChatroomMessages(chatroomId: $chatroomId){
+            _id
+            content
+            date
+            sender
+            chatroom
+        }
+    }
+`;
+
+export const GET_CHAT_OPTIONS = gql`
+    query getChatOptions {
+        getChatOptions {
+            users{
+            _id
+            username
+            }
+            chatrooms {
+            _id
+            name
+            }
+        }
+    }
+
+`;
+

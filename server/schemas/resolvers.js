@@ -88,7 +88,7 @@ const resolvers = {
         },
 
         // Query to get the options to chat with
-        getChatOption: async (parent, args) => {
+        getChatOptions: async (parent, args) => {
 
             const users = await User.find({});
 
@@ -273,7 +273,8 @@ const resolvers = {
             try {
                 const newChatroom = await Chatroom.create({
                     name,
-                    members: [context.user._id], // Use an array to start with one member
+                    // Uses an array to start with one member
+                    members: [context.user._id], 
                 });
         
                 return newChatroom;
@@ -289,8 +290,9 @@ const resolvers = {
             try {
                 const updatedChatroom = await Chatroom.findByIdAndUpdate(
                     chatroom,
+                    // Adds the user to the members array
                     { $addToSet: { members: context.user._id } },
-                    { new: true } // Return the updated document
+                    { new: true }
                 );
         
                 if (!updatedChatroom) {

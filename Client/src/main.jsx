@@ -10,6 +10,7 @@ import Signin from './pages/SignIn.jsx';
 import Homepage from './pages/Homepage.jsx';
 import Profile from './pages/Profile.jsx';
 import Exercises from './pages/Exercises.jsx';
+import Chats from './pages/Chats.jsx';
 
 // Imports the styles
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -37,6 +38,9 @@ const router = createBrowserRouter([
       },{
         path: '/exercises',
         element: < Exercises />
+      },{
+        path: '/chat',
+        element: < Chats />
       },
     ]
   }
