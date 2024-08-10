@@ -1,4 +1,4 @@
-const { User, Body, Lift } = require('../models');
+const { User, Body, Lift, Message, Chatroom } = require('../models');
 const { signToken, AuthError } = require('../utils/auth');
 const s3 = require('../config/awsConfig');
 

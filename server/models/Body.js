@@ -31,12 +31,6 @@ const BodySchema = new Schema (
     id:false,
 })
 
-// Calculate in the client side
-// // Virtual filed to calculate the fat free mass index
-// BodySchema.virtual('ffmi').get(function() {
-//     const fatFreeMass = this.weight * (1 - this.bodyFatPercentage / 100);
-//     return fatFreeMass / (this.height * this.height);
-// })
 
 const Body = model('Body', BodySchema);
 
