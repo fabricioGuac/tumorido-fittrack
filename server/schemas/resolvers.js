@@ -4,12 +4,11 @@ const s3 = require('../config/awsConfig');
 
 const dateScalar = require('./scalars');
 
-// Upload: GraphQLUpload,
 
 const resolvers = {
     Date: dateScalar,
     Query: {
-        // TODO: Remove the populate('lift')  if possible within the timeframe query it on a need basis instead
+        // Query to the the current user data
         me: async (parent, arg, context) => {
             if (context.user) {
                 try {

@@ -1,7 +1,6 @@
 
 const typeDefs = `
 scalar Date
-scalar Upload
 
 input SetInput {
     reps: Float!
