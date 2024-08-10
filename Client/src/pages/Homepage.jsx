@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 
 export default function Homepage() {
@@ -76,6 +77,7 @@ export default function Homepage() {
                 </div>
             </div>
 
+            {!Auth.loggedIn() && (
             <div className="row text-center">
                 <div className="col-12">
                     <h2>Ready to Get Started?</h2>
@@ -85,6 +87,7 @@ export default function Homepage() {
                     </Link>
                 </div>
             </div>
+            )}
         </div>
     );
 
