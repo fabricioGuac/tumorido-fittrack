@@ -5,4 +5,4 @@ const Message =  require('./Message');
 const Chatroom =  require('./Chatroom');
 
 
-module.exports = {User, Body, Lift, Message};
+module.exports = {User, Body, Lift, Message, Chatroom};

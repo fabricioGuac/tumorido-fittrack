@@ -1,7 +1,6 @@
 
 const typeDefs = `
 scalar Date
-scalar Upload
 
 input SetInput {
     reps: Float!
@@ -69,6 +68,8 @@ type Mutation {
 
     sendPreSignedUrl(filename: String!, contentType: String!): String
     setUserPfp(url: String!): Boolean
+
+    sendMessage:(content: String!, receiver: ID, chatroom: ID): Message
 }
 
 `

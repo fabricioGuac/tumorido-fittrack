@@ -4,12 +4,10 @@ const s3 = require('../config/awsConfig');
 
 const dateScalar = require('./scalars');
 
-// Upload: GraphQLUpload,
 
 const resolvers = {
     Date: dateScalar,
     Query: {
-        // TODO: Remove the populate('lift')  if possible within the timeframe query it on a need basis instead
         me: async (parent, arg, context) => {
             if (context.user) {
                 try {
@@ -60,6 +58,43 @@ const resolvers = {
             // returns the response data
             return response.json();
 
+        },
+
+        // Query to get the chat between to users
+        getChat:async (parent, {userId}, context) => {
+            if(!context.user){
+                throw AuthError;
+            }
+            const currrentUserId = context.user._id;
+
+            const chat = await Message.find({
+                $or: [
+                    {sender: userId, receiver: currrentUserId},
+                    {sender: currrentUserId , receiver:userId },
+                ]
+            }).sort({date: 1});
+
+            return chat;
+        },
+
+        // Query to a chatroom messages
+        getChatroomMessages: async (parent, {chatroomId}) => {
+
+            const chat = await Message.find({
+                chatroom: chatroomId,
+            }).sort({date:1});
+
+            return chat;
+        },
+
+        // Query to get the options to chat with
+        getChatOption: async (parent, args) => {
+
+            const users = await User.find({});
+
+            const chatrooms = await Chatroom.find({});
+
+            return  {users, chatrooms};
         }
     },
 
@@ -207,6 +242,22 @@ const resolvers = {
                 }
             }
         throw AuthError;
+        },
+
+        // Mutation to send messages
+        sendMessage: async (parent, {content, receiver, chatroom}, context) => {
+            if (!context.user){
+                throw AuthError;
+            }
+
+            const newMessage = await Message.create({
+                content,
+                sender: context.user._id,
+                receiver: receiver || null,
+                chatroom: chatroom || null,
+            });
+
+            return newMessage;
         }
     }
 }
