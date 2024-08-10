@@ -105,14 +105,18 @@ export default function Exercises() {
                         {activeQuery === 'muscle' && data?.getExerciseByMuscle && (
                             <ExerciseCard exercises={data.getExerciseByMuscle} />
                         )}
-                        {activeQuery === 'name' && nameData?.getExerciseByName && (
+                        {activeQuery === 'name' && nameData?.getExerciseByName && nameData.getExerciseByName.length > 0 ? (
                             <ExerciseCard exercises={nameData.getExerciseByName} />
+                        ) : (
+                            <div className="d-flex justify-content-center align-items-center vh-100">
+                                <h2 >No exercise under that name in the ninja exercise API.</h2>
+                            </div>
                         )}
                     </div>
                 </div>
             </div>
         </>
     );
-    
-    
+
+
 }
