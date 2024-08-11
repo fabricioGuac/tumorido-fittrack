@@ -57,20 +57,20 @@ export const GET_CHAT = gql`
             _id
             content
             date
-            sender
-            receiver
+            sender 
+            receiver 
         }
     }
 `;
 
-export const GET_CHATROOM = gql`
-    query getChatroomMessages($chatroomId: ID!){
-        getChatroomMessages(chatroomId: $chatroomId){
-            _id
-            content
-            date
-            sender
-            chatroom
+export const GET_USER_CHATS = gql`
+    query getUserChats {
+        getUserChats {
+        id 
+        members {
+            username
+            pfp
+            }
         }
     }
 `;
@@ -78,16 +78,11 @@ export const GET_CHATROOM = gql`
 export const GET_CHAT_OPTIONS = gql`
     query getChatOptions {
         getChatOptions {
-            users{
             _id
             username
-            }
-            chatrooms {
-            _id
-            name
-            }
+            pfp
         }
     }
-
 `;
+
 

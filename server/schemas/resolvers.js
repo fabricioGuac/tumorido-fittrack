@@ -3,6 +3,7 @@ const { signToken, AuthError } = require('../utils/auth');
 const s3 = require('../config/awsConfig');
 
 const dateScalar = require('./scalars');
+const { $where } = require('../models/Lift');
 
 
 const resolvers = {
@@ -65,36 +66,45 @@ const resolvers = {
             if(!context.user){
                 throw AuthError;
             }
-            const currrentUserId = context.user._id;
+            const currentUserId = context.user._id;
 
-            const chat = await Message.find({
-                $or: [
-                    {sender: userId, receiver: currrentUserId},
-                    {sender: currrentUserId , receiver:userId },
-                ]
-            }).sort({date: 1});
+            try {
+                const chat = await Chatroom.findOne({members: {$all: [userId, currentUserId]}}).populate('messages').lean();
 
-            return chat;
+                return chat ? chat.messages : [];
+
+            } catch (err) {
+                console.log(err);
+                throw new Error ("Error reading the chat" + err.message);
+            }
         },
 
-        // Query to a chatroom messages
-        getChatroomMessages: async (parent, {chatroomId}) => {
-
-            const chat = await Message.find({
-                chatroom: chatroomId,
-            }).sort({date:1});
-
-            return chat;
-        },
 
         // Query to get the options to chat with
-        getChatOptions: async (parent, args) => {
+        getChatOptions: async (parent, args, context) => {
+            if(!context.user){
+                throw AuthError;
+            }
 
-            const users = await User.find({});
+            const userOptions = await User.find({_id: {$ne: context.user._id}});
 
-            const chatrooms = await Chatroom.find({});
 
-            return  {users, chatrooms};
+            return userOptions ;
+        },
+
+        // Query to get the chats of the user
+        getUserChats: async (parent, args, context) => {
+            if(!context.user){
+                throw AuthError;
+            }
+
+            const currentUserId = context.user._id;
+
+            const userChats = await Chatroom.find({members: currentUserId})
+            .sort({updatedAt: -1})
+            .populate('members', 'username pfp');
+
+            return userChats;
         }
     },
 
@@ -245,19 +255,37 @@ const resolvers = {
         },
 
         // Mutation to send messages
-        sendMessage: async (parent, {content, receiver, chatroom}, context) => {
+        sendMessage: async (parent, {content, receiver}, context) => {
             if (!context.user){
                 throw AuthError;
             }
 
+            const sender = context.user._id;
+
             try {
                 
+                // Creates the new messsage
                 const newMessage = await Message.create({
                     content,
-                    sender: context.user._id,
-                    receiver: receiver || null,
-                    chatroom: chatroom || null,
+                    sender,
+                    receiver,
                 });
+
+                // Updates the chatroom to containe the new message
+                const chatroom = await Chatroom.findOneAndUpdate({
+                    members: {$all: [sender, receiver]},
+                },
+                {$addToSet: {messages: newMessage._id}},
+                {runValidators: true, new: true},
+                )
+
+                // If the chatroom does no exist it creates a new chatroom
+                if(!chatroom){
+                    await Chatroom.create({
+                        members: [sender, receiver],
+                        messages:[newMessage._id],
+                    })
+                }
     
                 return newMessage;
             } catch (err) {

@@ -23,10 +23,6 @@ const messageSchema = new Schema (
             type: Schema.Types.ObjectId,
             ref: 'User',
         },
-        chatroom: {
-            type: Schema.Types.ObjectId,
-            ref: 'Chatroom',
-        }
     },
 
     {

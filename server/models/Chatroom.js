@@ -2,17 +2,13 @@ const { Schema, model } = require('mongoose');
 
 const chatroomSchema =  new Schema( 
     {
-        name: {
-            type: String,
-            required: true,
-            unique: true,
-            trim: true,
-            maxlength: 70
-        },
+        messages: [{type: Schema.Types.ObjectId, ref: 'Message'}],
         members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     },
 
     {
+        timestamps: true,
+
         toJSON: {
             getters: true,
         },

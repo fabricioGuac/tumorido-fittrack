@@ -56,11 +56,12 @@ export const SET_USER_PFP = gql`
     ;
 
 export const SEND_MESSAGE = gql`
-    mutation sendMessage($content: String!, $receiver: ID, $chatroom: ID){
-        sendMessage(content: $content, receiver: $receiver, chatroom: $chatroom){
+    mutation sendMessage($content: String!, $receiver: ID!){
+        sendMessage(content: $content, receiver: $receiver){
                 content
                 date
                 sender
+                receiver
         }
     }
 `;

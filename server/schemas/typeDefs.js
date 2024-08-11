@@ -7,21 +7,6 @@ input SetInput {
     weight: Float!
 }
 
-type Message {
-    _id: ID!
-    content: String!
-    date: Date!
-    sender: ID!
-    receiver: ID
-    chatroom: ID
-}
-
-type Chatroom {
-    _id: ID
-    name: String
-    members: [ID]
-}
-
 
 
 type Exercise {
@@ -64,10 +49,21 @@ type User {
     pfp: String
     }
 
-type ChatOptions {
-    users: [User]
-    chatrooms: [Chatroom]
+
+type Message {
+    _id: ID!
+    content: String!
+    date: Date!
+    sender: ID!
+    receiver: ID!
 }
+
+type Chatroom {
+    _id: ID
+    members: [User]
+    messages: [ID]
+}
+
 
 type Auth {
     token: ID!
@@ -81,7 +77,8 @@ type Query {
 
     getChat(userId: ID!): [Message]
     getChatroomMessages(chatroomId: ID!):[Message]
-    getChatOptions:[ChatOptions]
+    getChatOptions: [User]
+    getUserChats: [Chatroom]
 }
 
 type Mutation {
@@ -94,7 +91,7 @@ type Mutation {
     sendPreSignedUrl(filename: String!, contentType: String!): String
     setUserPfp(url: String!): Boolean
 
-    sendMessage(content: String!, receiver: ID, chatroom: ID): Message
+    sendMessage(content: String!, receiver: ID!): Message
     createChatroom(name: String!): Chatroom
     joinChatroom(chatroom: ID!): Chatroom
 }
