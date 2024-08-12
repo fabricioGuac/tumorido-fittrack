@@ -62,7 +62,7 @@ export default function Chatroom({ receiver }) {
     useEffect(() => {
         if (roomId) {
             // Connects to the server
-            socket.current = io('http://localhost:3001');
+            socket.current = io('https://tumorido-fittrack.onrender.com');
 
             // Joins the current room
             socket.current.emit('joinRoom', roomId);

@@ -20,7 +20,6 @@ const { typeDefs, resolvers } = require('./schemas');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// const WS_PORT = process.env.WS_PORT || 5000;
 
 // Creates an http server using the express instance
 const socketServer = http.createServer(app);
