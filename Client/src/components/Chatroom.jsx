@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { io } from "socket.io-client";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_CHAT } from "../utils/queries";
@@ -6,52 +7,85 @@ import { SEND_MESSAGE } from "../utils/mutations";
 
 export default function Chatroom({ receiver }) {
 
+    // Sets the state variables
     const [message, setMessage] = useState('');
     const [chatroom, setChatroom] = useState([]);
     const [roomId, setRoomId] = useState(null);
 
+    // Mutation to send the messages
     const [sendMessage, { loading, error }] = useMutation(SEND_MESSAGE);
 
+    // Query to retrieve the chat data
     const { data: chatData, loading: chatLoading } = useQuery(GET_CHAT, {
         variables: { userId: receiver?._id },
     });
 
+    // Reference used to scroll to the end of the chats
     const chatEndRef = useRef(null);
 
+    // Socket.io client instance
+    const socket = useRef(null);
+
+    // UseEffect to upate the chatroom messages and the room id when the chat data changes
     useEffect(() => {
         if (chatData?.getChat.messages) {
             setChatroom(chatData?.getChat.messages);
             setRoomId(chatData?.getChat._id);
         }
-    }, [chatData, roomId])
+    }, [chatData])
 
 
+    // UseEffect used to scroll to the end of the chat when the chatroom messages or the room id changes
     useEffect(() => {
         if (chatEndRef.current) {
             chatEndRef.current.scrollIntoView({ behavior: "smooth" });
         }
-    }, [chatroom, roomId]);
+    }, [chatroom]);
 
+    // UseEffect to stablish socket.io connection
+    useEffect(() => {
+        if (roomId) {
+            // Connects to the server
+            socket.current = io('http://localhost:3001');
 
+            // Joins the current room
+            socket.current.emit('joinRoom', roomId);
+
+            // Updates the chat to include the new message
+            socket.current.on('message', (message) => {
+                setChatroom(prevChatroom => [...prevChatroom, message]);
+            });
+
+            // Clean up on component unmount
+            return () => {
+                socket.current.disconnect();
+            };
+        }
+    }, [roomId]);
+
+    // Fucntion to handle the input change in the message form
     const handleInputChange = (e) => {
         setMessage(e.target.value);
     }
 
+    // Function to handle sending messages
     const handleSendMessage = async (e) => {
         e.preventDefault();
 
         try {
-            const {data} = await sendMessage({
+            // Executes the mutation and returns the data
+            const { data } = await sendMessage({
                 variables: { content: message, receiver: receiver._id }
             })
 
+            // Gets the new message from the data
             const newMessage = data?.sendMessage;
 
+            // Emits the new message
+            socket.current.emit('newMessage', { roomId, content: newMessage });
 
-            setChatroom([...chatroom, newMessage]);
 
-
-
+            // Clears the input
             setMessage('');
             console.log('Message sent:', message);
 
@@ -60,6 +94,7 @@ export default function Chatroom({ receiver }) {
         }
     }
 
+    // If no chat is selected render select chat message
     if (!receiver) {
         return (
             <div className="d-flex justify-content-center align-items-center vh-100">
@@ -67,6 +102,7 @@ export default function Chatroom({ receiver }) {
             </div>)
     }
 
+    // If the chat is loading render loading message
     if (chatLoading) {
         return (
             <div className="d-flex justify-content-center align-items-center vh-100">
