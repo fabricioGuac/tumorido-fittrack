@@ -35,11 +35,12 @@ const resolvers = {
 
             // Makes the api call
             const response = await fetch(`https://api.api-ninjas.com/v1/exercises?name=${name}`, {
-                    method: 'GET',
-                    headers: {
-                        'X-Api-Key': process.env.EXERCISE_API_KEY,
-                        'Content-Type': 'application/json'
-                    }});
+                method: 'GET',
+                headers: {
+                    'X-Api-Key': process.env.EXERCISE_API_KEY,
+                    'Content-Type': 'application/json'
+                }
+            });
             // returns the response data
             return response.json();
 
@@ -49,60 +50,71 @@ const resolvers = {
         // Query to make an query exercises by muscle to an api
         getExerciseByMuscle: async (parent, { muscle },) => {
 
-                // Makes the api call
-                const response = await fetch(`https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`, {
-                    method: 'GET',
-                    headers: {
-                        'X-Api-Key': process.env.EXERCISE_API_KEY,
-                        'Content-Type': 'application/json'
-                    }});
+            // Makes the api call
+            const response = await fetch(`https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`, {
+                method: 'GET',
+                headers: {
+                    'X-Api-Key': process.env.EXERCISE_API_KEY,
+                    'Content-Type': 'application/json'
+                }
+            });
             // returns the response data
             return response.json();
 
         },
 
         // Query to get the chat between to users
-        getChat:async (parent, {userId}, context) => {
-            if(!context.user){
+        getChat: async (parent, { userId }, context) => {
+            if (!context.user) {
                 throw AuthError;
             }
             const currentUserId = context.user._id;
 
             try {
-                const chat = await Chatroom.findOne({members: {$all: [userId, currentUserId]}}).populate('messages').lean();
+                const chat = await Chatroom.findOne({ members: { $all: [userId, currentUserId] } }).populate('messages').lean();
 
-                return chat ? chat : null;
+                // If the chat does not exist it creates a new chatroom
+                if (!chat) {
+                    return await Chatroom.create({
+                        members: [userId, currentUserId],
+                    });
+                }
+
+                return chat;
 
             } catch (err) {
                 console.log(err);
-                throw new Error ("Error reading the chat" + err.message);
+                throw new Error("Error reading the chat" + err.message);
             }
         },
 
 
         // Query to get the options to chat with
         getChatOptions: async (parent, args, context) => {
-            if(!context.user){
+            if (!context.user) {
                 throw AuthError;
             }
 
-            const userOptions = await User.find({_id: {$ne: context.user._id}});
+            const userOptions = await User.find({ _id: { $ne: context.user._id } });
 
 
-            return userOptions ;
+            return userOptions;
         },
 
         // Query to get the chats of the user
         getUserChats: async (parent, args, context) => {
-            if(!context.user){
+            if (!context.user) {
                 throw AuthError;
             }
 
             const currentUserId = context.user._id;
 
-            const userChats = await Chatroom.find({members: currentUserId})
-            .sort({updatedAt: -1})
-            .populate('members', 'username pfp');
+            const userChats = await Chatroom.find({ members: currentUserId })
+                .sort({ updatedAt: -1 })
+                .populate('members', 'username pfp');
+
+
+
 
             return userChats;
         }
@@ -243,27 +255,27 @@ const resolvers = {
 
                     }
 
-                // If the operation secceeds returns true
-                return true;
+                    // If the operation secceeds returns true
+                    return true;
 
                 } catch (err) {
                     console.log(err);
                     throw new Error('Error updating the profile picture')
                 }
             }
-        throw AuthError;
+            throw AuthError;
         },
 
         // Mutation to send messages
-        sendMessage: async (parent, {content, receiver}, context) => {
-            if (!context.user){
+        sendMessage: async (parent, { content, receiver }, context) => {
+            if (!context.user) {
                 throw AuthError;
             }
 
             const sender = context.user._id;
 
             try {
-                
+
                 // Creates the new messsage
                 const newMessage = await Message.create({
                     content,
@@ -273,20 +285,12 @@ const resolvers = {
 
                 // Updates the chatroom to containe the new message
                 const chatroom = await Chatroom.findOneAndUpdate({
-                    members: {$all: [sender, receiver]},
+                    members: { $all: [sender, receiver] },
                 },
-                {$addToSet: {messages: newMessage._id}},
-                {runValidators: true, new: true},
+                    { $addToSet: { messages: newMessage._id } },
+                    { runValidators: true, new: true },
                 )
 
-                // If the chatroom does no exist it creates a new chatroom
-                if(!chatroom){
-                    await Chatroom.create({
-                        members: [sender, receiver],
-                        messages:[newMessage._id],
-                    })
-                }
-    
 
                 return newMessage;
             } catch (err) {
@@ -295,25 +299,25 @@ const resolvers = {
         },
 
         // Mutation to create a chatroom
-        createChatroom: async (parent, {name}, context) => {
-            if (!context.user){
+        createChatroom: async (parent, { name }, context) => {
+            if (!context.user) {
                 throw AuthError;
             }
             try {
                 const newChatroom = await Chatroom.create({
                     name,
                     // Uses an array to start with one member
-                    members: [context.user._id], 
+                    members: [context.user._id],
                 });
-        
+
                 return newChatroom;
             } catch (err) {
                 throw new Error('Error creating chatroom: ' + err.message);
             }
         },
 
-        joinChatroom: async (parent, {chatroom}, context) => {
-            if (!context.user){
+        joinChatroom: async (parent, { chatroom }, context) => {
+            if (!context.user) {
                 throw AuthError;
             }
             try {
@@ -323,11 +327,11 @@ const resolvers = {
                     { $addToSet: { members: context.user._id } },
                     { new: true }
                 );
-        
+
                 if (!updatedChatroom) {
                     throw new Error('Chatroom not found');
                 }
-        
+
                 return updatedChatroom;
             } catch (err) {
                 throw new Error('Error joining chatroom: ' + err.message);
