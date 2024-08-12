@@ -10,10 +10,7 @@ const messageSchema = new Schema (
         date: {
                 type: Date, 
                 default: Date.now,
-                get: function (date) {
-                    return date.toLocaleDateString();
-                }
-            },
+                },
         sender: {
             type: Schema.Types.ObjectId,
             ref: 'User',

@@ -21,11 +21,6 @@ export default function Chatroom ({receiver}) {
         }
     }, [chatData])
 
-    // ////////////////////
-    console.log(chatData);
-    console.log('chatroom:');
-    console.log(chatroom);
-    ////////////////////////
 
     const handleInputChange = (e) => {
         setMessage(e.target.value);
@@ -45,7 +40,7 @@ export default function Chatroom ({receiver}) {
             console.log('Message sent:', message);
             
         } catch (err) {
-            console.log(err);
+            console.log(err.message);
         }
     }
 
@@ -81,7 +76,7 @@ export default function Chatroom ({receiver}) {
                     chatroom.map(msg => (
                         <div 
                             key={msg._id} 
-                            className={`message ${msg.sender !== receiver._id ? 'send' : 'received'}`}
+                            className={`message ${msg.sender !== receiver._id ? 'sent' : 'received'}`}
                         >
                             <div className="message-header">
                                 <strong>{msg.sender === receiver._id ? receiver.username : 'You'}</strong>

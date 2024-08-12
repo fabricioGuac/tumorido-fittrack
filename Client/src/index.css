@@ -319,22 +319,34 @@ IDK
 }
 
 /* ////////////////////////////////////////////// */
-/* .pfp {
-  width: 250px; 
-  height: 250px; 
-  cursor: pointer;
-} */
 
- .pfp:hover {
+
+.pfp:hover {
   cursor: pointer;
 
   border: solid 3px blue;
 } 
- 
+
 
 /* ////////////////////////////////////////////// */
 
+.sent {
+  background-color: #5986b6; 
+  color: #fff;
+  align-self: flex-end;
+  margin-left: auto;
+  text-align: right;
+}
 
+.received {
+  background-color: #e9ecef; 
+  color: #333;
+  align-self: flex-start;
+  margin-right: auto;
+  text-align: left;
+}
+
+/* ////////////////////////////////////////////// */
 @media (max-width: 768px) {
 
   

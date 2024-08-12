@@ -287,6 +287,7 @@ const resolvers = {
                     })
                 }
     
+                
                 return newMessage;
             } catch (err) {
                 throw new Error('Error sending message: ' + err.message);
