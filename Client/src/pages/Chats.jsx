@@ -5,18 +5,14 @@ import Auth from '../utils/auth';
 
 
 import ChatOptions from "../components/ChatOptions";
-// import ChatHistory from "../components/ChatHistory";
 import Chatroom from "../components/Chatroom";
 
 export default function Chats() {
 
-    // const [view, setView] = useState('options');
+    // Sets the state variable to store the user data
     const [selectedUser, setSelectedUser] =  useState(null);
 
 
-    useEffect(() => {
-        console.log(selectedUser)
-    }, [selectedUser, setSelectedUser])
 
     const navigate = useNavigate();
 

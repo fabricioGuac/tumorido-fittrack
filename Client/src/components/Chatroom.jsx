@@ -16,7 +16,7 @@ export default function Chatroom({ receiver }) {
     const [sendMessage, { loading, error }] = useMutation(SEND_MESSAGE);
 
     // Query to retrieve the chat data
-    const { data: chatData, loading: chatLoading } = useQuery(GET_CHAT, {
+    const { data: chatData, loading: chatLoading, refetch } = useQuery(GET_CHAT, {
         variables: { userId: receiver?._id },
     });
 
@@ -26,13 +26,29 @@ export default function Chatroom({ receiver }) {
     // Socket.io client instance
     const socket = useRef(null);
 
-    // UseEffect to upate the chatroom messages and the room id when the chat data changes
+    // UseEffect to refetch chat data when receiver changes
     useEffect(() => {
-        if (chatData?.getChat.messages) {
-            setChatroom(chatData?.getChat.messages);
-            setRoomId(chatData?.getChat._id);
+        if (receiver?._id) {
+            refetch();
         }
-    }, [chatData])
+    }, [receiver, refetch]);
+
+
+    // UseEffect to update the chatroom messages and the room id when the chat data changes
+    useEffect(() => {
+        if (chatData && chatData.getChat) {
+            if (chatData.getChat.messages) {
+                setChatroom(chatData.getChat.messages);
+            } else {
+                // Set chatroom to default value (empty array) if no messages are returned
+                setChatroom([]);
+            }
+            setRoomId(chatData.getChat._id);
+        } else {
+            // Set chatroom to default value (empty array) if chatData is null or undefined
+            setChatroom([]);
+        }
+    }, [chatData]);
 
 
     // UseEffect used to scroll to the end of the chat when the chatroom messages or the room id changes
@@ -84,10 +100,9 @@ export default function Chatroom({ receiver }) {
             // Emits the new message
             socket.current.emit('newMessage', { roomId, content: newMessage });
 
-
             // Clears the input
             setMessage('');
-            console.log('Message sent:', message);
+            console.log('Message sent:', newMessage);
 
         } catch (err) {
             console.log(err.message);
@@ -125,7 +140,7 @@ export default function Chatroom({ receiver }) {
                 {chatroom.length > 0 ? (
                     chatroom.map(msg => (
                         <div
-                            key={msg._id}
+                            key={msg.date}
                             className={`message ${msg.sender !== receiver._id ? 'sent' : 'received'}`}
                         >
                             <div className="message-header">
