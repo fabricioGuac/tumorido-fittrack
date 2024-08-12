@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_CHAT } from "../utils/queries";
@@ -15,11 +15,19 @@ export default function Chatroom({ receiver }) {
         variables: { userId: receiver?._id },
     });
 
+    const chatEndRef = useRef(null);
+
     useEffect(() => {
         if (chatData?.getChat) {
             setChatroom(chatData?.getChat);
         }
     }, [chatData])
+
+    useEffect(() => {
+        if (chatEndRef.current) {
+            chatEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [chatroom]);
 
 
     const handleInputChange = (e) => {
@@ -88,6 +96,7 @@ export default function Chatroom({ receiver }) {
                         Send a message to start the conversation
                     </h4>
                 )}
+                <div ref={chatEndRef} />
             </div>
 
             <form className="message-form" onSubmit={handleSendMessage}>
