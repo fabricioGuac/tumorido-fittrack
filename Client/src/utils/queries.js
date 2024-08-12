@@ -54,11 +54,13 @@ export const GET_EXERCISE_BY_MUSCLE = gql`
 export const GET_CHAT = gql`
     query getChat($userId: ID!) {
         getChat(userId: $userId) {
-            _id
-            content
-            date
-            sender 
-            receiver 
+        _id
+        messages { _id
+                content
+                date
+                sender 
+                receiver
+            } 
         }
     }
 `;

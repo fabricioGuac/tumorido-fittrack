@@ -71,7 +71,7 @@ const resolvers = {
             try {
                 const chat = await Chatroom.findOne({members: {$all: [userId, currentUserId]}}).populate('messages').lean();
 
-                return chat ? chat.messages : [];
+                return chat ? chat : null;
 
             } catch (err) {
                 console.log(err);
@@ -287,7 +287,7 @@ const resolvers = {
                     })
                 }
     
-                
+
                 return newMessage;
             } catch (err) {
                 throw new Error('Error sending message: ' + err.message);

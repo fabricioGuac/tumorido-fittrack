@@ -8,6 +8,7 @@ export default function Chatroom({ receiver }) {
 
     const [message, setMessage] = useState('');
     const [chatroom, setChatroom] = useState([]);
+    const [roomId, setRoomId] = useState(null);
 
     const [sendMessage, { loading, error }] = useMutation(SEND_MESSAGE);
 
@@ -18,16 +19,18 @@ export default function Chatroom({ receiver }) {
     const chatEndRef = useRef(null);
 
     useEffect(() => {
-        if (chatData?.getChat) {
-            setChatroom(chatData?.getChat);
+        if (chatData?.getChat.messages) {
+            setChatroom(chatData?.getChat.messages);
+            setRoomId(chatData?.getChat._id);
         }
-    }, [chatData])
+    }, [chatData, roomId])
+
 
     useEffect(() => {
         if (chatEndRef.current) {
             chatEndRef.current.scrollIntoView({ behavior: "smooth" });
         }
-    }, [chatroom]);
+    }, [chatroom, roomId]);
 
 
     const handleInputChange = (e) => {

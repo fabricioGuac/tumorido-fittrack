@@ -60,8 +60,8 @@ type Message {
 
 type Chatroom {
     _id: ID
-    members: [User]
-    messages: [ID]
+    members: [ID]
+    messages: [Message]
 }
 
 
@@ -75,7 +75,7 @@ type Query {
     getExerciseByName(name:String!): [Exercise]
     getExerciseByMuscle(muscle:String!): [Exercise]
 
-    getChat(userId: ID!): [Message]
+    getChat(userId: ID!): Chatroom
     getChatroomMessages(chatroomId: ID!):[Message]
     getChatOptions: [User]
     getUserChats: [Chatroom]
