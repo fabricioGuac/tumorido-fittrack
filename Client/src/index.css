@@ -418,6 +418,9 @@ IDK
   border-radius: 5px; 
 }
 
+.chat-options {
+  cursor: pointer;
+}
 
 
 /* ////////////////////////////////////////////// */

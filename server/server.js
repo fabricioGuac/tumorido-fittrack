@@ -28,11 +28,6 @@ const socketServer = http.createServer(app);
 // Initializes a socket.io server instance with the HTTP server
 const io = socketConnect(socketServer);
 
-// Starts the server and binds it to the WebSocket port
-// socketServer.listen( WS_PORT, () => {
-//     console.log(`WEBSOCKET LISTENING ON ${WS_PORT}`)
-// } );
-
 
 // Creates a new Apollo Server instance with the specified type definitions and resolvers
 const server = new ApolloServer({

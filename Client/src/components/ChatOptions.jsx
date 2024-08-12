@@ -15,6 +15,7 @@ export default function ChatOptions ({selectUser}) {
     
         const {loading, data} = useQuery(GET_CHAT_OPTIONS);
     
+        // UseEffect to update the userOptions
         useEffect (() => {
             
             if(data){
@@ -22,14 +23,13 @@ export default function ChatOptions ({selectUser}) {
             }
         }, [data])
     
-        console.log(`
-            User options: ${JSON.stringify(userOptions, null, 2)}
-        `);
-
+        // Function to handle an user selection
         const handleUserSelect = (id) => {
 
+            // Filter the options to get the data from the selecte user
             const filteredUser = userOptions.filter( chat => chat._id === id);
 
+            // Sets the state variable to the data of the selected user
             selectUser(filteredUser[0]);
         }
     
@@ -44,10 +44,10 @@ export default function ChatOptions ({selectUser}) {
             <>
         
             <div>
-                <h3>Chat with users</h3>
+                <h3 className="text-center">Chat with users</h3>
                 {userOptions.length > 0 ? (
                     userOptions.map(user => (
-                        <div key={user._id} onClick={() => handleUserSelect(user._id)} className="row align-items-center">
+                        <div key={user._id} onClick={() => handleUserSelect(user._id)} className="row align-items-center mt-3 chat-options">
                         <div className="col-2">
                             <img src={user.pfp || '/defaultPfp.png'} className="img-fluid rounded-circle mb-4" alt="Profile Picture" />
                         </div>
