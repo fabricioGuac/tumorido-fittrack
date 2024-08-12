@@ -38,9 +38,14 @@ export default function Chatroom({ receiver }) {
         e.preventDefault();
 
         try {
-            await sendMessage({
+            const {data} = await sendMessage({
                 variables: { content: message, receiver: receiver._id }
             })
+
+            const newMessage = data?.sendMessage;
+
+
+            setChatroom([...chatroom, newMessage]);
 
 
 
