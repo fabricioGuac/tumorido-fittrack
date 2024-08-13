@@ -50,7 +50,7 @@ export default function BodyForm({setView}) {
         }
 
         // Splits the input by anything but a number
-        const parts = height.split(/\D+/);
+        const parts = height.trim().split(/\D+/);
 
 
         // Initializes feet and inches
