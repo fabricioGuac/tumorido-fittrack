@@ -42,6 +42,7 @@ const liftSchema = new Schema(
 });
 
 
+
 const Lift = model('Lift', liftSchema);
 
 module.exports = Lift;

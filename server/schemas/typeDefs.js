@@ -7,6 +7,8 @@ input SetInput {
     weight: Float!
 }
 
+
+
 type Exercise {
     name: String
     type: String
@@ -48,6 +50,21 @@ type User {
     }
 
 
+type Message {
+    _id: ID!
+    content: String!
+    date: Date!
+    sender: ID!
+    receiver: ID!
+}
+
+type Chatroom {
+    _id: ID
+    members: [ID]
+    messages: [Message]
+}
+
+
 type Auth {
     token: ID!
     user: User
@@ -57,17 +74,26 @@ type Query {
     me: User
     getExerciseByName(name:String!): [Exercise]
     getExerciseByMuscle(muscle:String!): [Exercise]
+
+    getChat(userId: ID!): Chatroom
+    getChatroomMessages(chatroomId: ID!):[Message]
+    getChatOptions: [User]
+    getUserChats: [Chatroom]
 }
 
 type Mutation {
     createUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     
-    addBody(weight:Float!, bodyFatPercentage: Float!, height: Int!): User
+    addBody(weight:Float!, bodyFatPercentage: Float!, height: Float!): User
     addLift(exercise: String!, sets: [SetInput!]!): User
 
     sendPreSignedUrl(filename: String!, contentType: String!): String
     setUserPfp(url: String!): Boolean
+
+    sendMessage(content: String!, receiver: ID!): Message
+    createChatroom(name: String!): Chatroom
+    joinChatroom(chatroom: ID!): Chatroom
 }
 
 `

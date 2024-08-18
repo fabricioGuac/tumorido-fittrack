@@ -32,7 +32,6 @@ const BodySchema = new Schema (
 })
 
 
-
 const Body = model('Body', BodySchema);
 
 module.exports = Body;
