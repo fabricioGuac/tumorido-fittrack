@@ -3,7 +3,6 @@ const { signToken, AuthError } = require('../utils/auth');
 const s3 = require('../config/awsConfig');
 
 const dateScalar = require('./scalars');
-const { $where } = require('../models/Lift');
 
 
 const resolvers = {

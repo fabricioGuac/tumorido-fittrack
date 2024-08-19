@@ -51,9 +51,6 @@ export default function Pfp ({userPfp}) {
                     throw new Error ('Failed to post the new profile picture');
                 }
 
-                // console.log(AWSresponse.url);
-                // console.log('/////////////////////')
-                // console.log(presignedUrl.split('?')[0]);
 
                 // Updates the user profile picture tp the new image s3 URL
                 const {data: pfpUpdateData} = await setPfp({

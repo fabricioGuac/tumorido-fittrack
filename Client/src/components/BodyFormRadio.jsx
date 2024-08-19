@@ -6,7 +6,7 @@ export default function BodyFormRadio({ sex, measureUnit, massUnit, handleRadioC
 
     return (
         <>
-            <div className='radio-group'>
+            {/* <div className='radio-group'>
                 <label>
                     <input
                         type="radio"
@@ -29,7 +29,7 @@ export default function BodyFormRadio({ sex, measureUnit, massUnit, handleRadioC
                     />
                     Female
                 </label>
-            </div>
+            </div> */}
             <div className='radio-group'>
                 <label >
                     <input

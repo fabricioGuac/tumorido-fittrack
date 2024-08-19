@@ -36,9 +36,9 @@ export default function Profile() {
 
     const lifts = data?.me.lift || [];
     const body = data?.me.body || [];
-    const height = data?.me.height || 0;
+    const height = data?.me.height || 165;
     const userPfp = data?.me.pfp || '/defaultPfp.png';
-    const age = data?.me.age || 0;
+    const age = data?.me.age || 18;
     const isFemale = data?.me.gender || 0;
 
     console.log(lifts, body, height, userPfp, age, isFemale);
@@ -103,7 +103,7 @@ export default function Profile() {
 
                     <div className='col-md-10'>
                         {view === "bodyData" && <BodyData bodyData={body} height={height} age={age} isFemale={isFemale} />}
-                        {view === "bodyForm" && <BodyForm setView={setView} isFemale={isFemale} />}
+                        {view === "bodyForm" && <BodyForm setView={setView} isFemale={isFemale} height={height} />}
                         {view === "liftForm" && <LiftForm liftOptions={liftOptions} />}
                         {view === "liftData" && <LiftData liftOptions={liftOptions} liftsData={lifts} />}
                     </div>

@@ -83,7 +83,7 @@ export default function BodyData({ bodyData, height, isFemale, age }) {
                 </div>
             </div>
             <div>
-                <CalorieCalc latestData={bodyData[0]} latestFFMI={calculateFFMI(bodyData[0].weight, bodyData[0].bodyFatPercentage)} height={height} />
+                <CalorieCalc latestData={bodyData[0]} latestFFMI={calculateFFMI(bodyData[0].weight, bodyData[0].bodyFatPercentage)} height={height} age={age} isFemale={isFemale} />
             </div>
         </>
     )

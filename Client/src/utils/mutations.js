@@ -27,8 +27,8 @@ export const ADD_USER = gql`
 
 
 export const ADD_BODY = gql`
-    mutation addBody($weight: Float!, $bodyFatPercentage: Float!, $height: Float!){
-    addBody(weight: $weight, bodyFatPercentage: $bodyFatPercentage , height: $height ){
+    mutation addBody($weight: Float!, $bodyFatPercentage: Float!){
+    addBody(weight: $weight, bodyFatPercentage: $bodyFatPercentage ){
         username
     }
 }
