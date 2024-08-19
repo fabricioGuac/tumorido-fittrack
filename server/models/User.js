@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const Lift = require('./Lift');
+const Body = require('./Body');
 
 const userSchema = new Schema(
     {
@@ -23,6 +25,16 @@ const userSchema = new Schema(
         },
         height: {
             type: Number,
+            required: true,
+        },
+        birthday: {
+            type: Date,
+            required:true,
+        },
+        // Represents the gender 0 for men 1 for women
+        gender: {
+            type: Number,
+            required: true,
         },
         pfp: {
             type: String,
@@ -35,7 +47,8 @@ const userSchema = new Schema(
             virtuals: true,
         },
         id:false,
-    });
+    }
+);
 
 
 // hash password
@@ -47,10 +60,26 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
+// Hooks to delete the users related measurements and lifts if the user is deleted
+userSchema.pre('remove', async function (next) {
+    // Deletes all lifts that belong to the user
+    await Lift.deleteMany({_id: {$in: this.lift}});
+    // Deletes all body measurements that belong to the user
+    await Body.deleteMany({_id:{$in: this.body}});
+    // TODO: Strategie to delete messages or chatrooms
+
+    next();
+})
+
 // Compare password
 userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
+
+// Virtual to calculate an aproximate of the users age
+userSchema.virtual('age').get(function() {
+    return new Date().getFullYear() - this.birthday.getFullYear();
+})
 
 const User = model('user', userSchema);
 

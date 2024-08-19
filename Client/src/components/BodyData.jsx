@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Graph from "./Graph";
 import CalorieCalc from "./CalorieCalc";
 
-export default function BodyData({ bodyData, height }) {
+export default function BodyData({ bodyData, height, isFemale, age }) {
 
     // Sets the state variable to identify the target data that will be displayed in the graph
     const [graphTarget, setGraphTarget] = useState('FFMI');
@@ -52,8 +52,8 @@ export default function BodyData({ bodyData, height }) {
                         <div key={item.date}>
                             <details>
                                 <summary>{`Body measurements in ${new Date(item.date).toLocaleDateString()}`}</summary>
-                                <p>Weight: {item.weight}</p>
-                                <p>Body Fat Percentage: {item.bodyFatPercentage}</p>
+                                <p>Weight: {item.weight}kg</p>
+                                <p>Body Fat Percentage: {item.bodyFatPercentage}%</p>
                                 <p>FFMI: {calculateFFMI(item.weight, item.bodyFatPercentage)}</p>
                             </details>
                         </div>

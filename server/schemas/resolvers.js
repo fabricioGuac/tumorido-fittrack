@@ -14,7 +14,7 @@ const resolvers = {
                 try {
                     const user = await User.findOne({ _id: context.user._id })
                         .populate({ path: 'lift', options: { sort: { date: -1 } } })
-                        .populate({ path: 'body', options: { sort: { date: -1 } } }).lean();
+                        .populate({ path: 'body', options: { sort: { date: -1 } } });
 
                     user.lift = user.lift.map(lift => ({
                         ...lift,
@@ -122,9 +122,9 @@ const resolvers = {
 
     Mutation: {
         // Mutation to create a new user
-        createUser: async (parent, { username, email, password }) => {
+        createUser: async (parent, { username, email, password, height, gender, birthday }) => {
             // Creates a new user
-            const user = await User.create({ username, email, password });
+            const user = await User.create({ username, email, password, height, gender, birthday });
 
             // Creates a jwt token for the new user
             const token = signToken(user);
@@ -157,7 +157,7 @@ const resolvers = {
             return { token, user }
         },
         // Mutation to introduce body data
-        addBody: async (parent, { weight, bodyFatPercentage, height }, context) => {
+        addBody: async (parent, { weight, bodyFatPercentage}, context) => {
 
             // If the context does not have an user object throws an autentication error
             if (!context.user) {
@@ -172,8 +172,6 @@ const resolvers = {
                 {
                     // Adds the id of the new body to the body ids array
                     $addToSet: { body: body._id },
-                    // Updates the height
-                    $set: { height: height },
                 },
                 { new: true, runValidators: true },
             );

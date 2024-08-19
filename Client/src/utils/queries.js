@@ -8,6 +8,8 @@ query me {
         email
         height
         pfp
+        gender
+        age
         lift {
             _id
             exercise

@@ -7,7 +7,7 @@ import { ADD_BODY } from '../utils/mutations';
 import { GET_ME } from '../utils/queries';
 
 
-export default function BodyForm({setView}) {
+export default function BodyForm({setView, isFemale}) {
 
     // State variables
     const [radios, setRadios] = useState({ sex: 'Male', measureUnit: 'cm', massUnit: 'kg' })
@@ -43,35 +43,35 @@ export default function BodyForm({setView}) {
         })
     }
 
-    // Converter functions to parse the imperial system to metric
-    function heightToCm(height) {
-        if (radios.measureUnit === 'cm') {
-            return parseFloat(height);
-        }
+    // // Converts functions to parse the imperial system to metric
+    // function heightToCm(height) {
+    //     if (radios.measureUnit === 'cm') {
+    //         return parseFloat(height);
+    //     }
 
-        // Splits the input by anything but a number
-        const parts = height.trim().split(/\D+/);
+    //     // Splits the input by anything but a number
+    //     const parts = height.trim().split(/\D+/);
 
 
-        // Initializes feet and inches
-        let feet = 0;
-        let inches = 0;
+    //     // Initializes feet and inches
+    //     let feet = 0;
+    //     let inches = 0;
 
-        // Determine feet and inches
-        if (parts.length === 1) {
-            // If only one part assumes it's all feets if it looks like a single number
-            return (parseFloat(parts[0]) * 30.48);
-        } else {
-            feet = parseFloat(parts[0]);
-            inches = parseFloat(parts[1]);
-        }
+    //     // Determine feet and inches
+    //     if (parts.length === 1) {
+    //         // If only one part assumes it's all feets if it looks like a single number
+    //         return (parseFloat(parts[0]) * 30.48);
+    //     } else {
+    //         feet = parseFloat(parts[0]);
+    //         inches = parseFloat(parts[1]);
+    //     }
 
-        // Converts feets and inches to centimeters
-        const totalInches = (feet * 12) + inches;
-        const heightInCm = totalInches * 2.54;
+    //     // Converts feets and inches to centimeters
+    //     const totalInches = (feet * 12) + inches;
+    //     const heightInCm = totalInches * 2.54;
 
-        return heightInCm;
-    }
+    //     return heightInCm;
+    // }
 
 
     const inToCm = (measurement) => {

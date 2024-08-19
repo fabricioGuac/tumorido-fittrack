@@ -47,6 +47,9 @@ type User {
     lift: [Lift]
     height: Float
     pfp: String
+    birthday: Date!
+    age: Int
+    gender: Int
     }
 
 
@@ -82,10 +85,10 @@ type Query {
 }
 
 type Mutation {
-    createUser(username: String!, email: String!, password: String!): Auth
+    createUser(username: String!, email: String!, password: String!, birthday: Date!, gender: Int!, height: Float!): Auth
     login(email: String!, password: String!): Auth
     
-    addBody(weight:Float!, bodyFatPercentage: Float!, height: Float!): User
+    addBody(weight:Float!, bodyFatPercentage: Float!): User
     addLift(exercise: String!, sets: [SetInput!]!): User
 
     sendPreSignedUrl(filename: String!, contentType: String!): String
