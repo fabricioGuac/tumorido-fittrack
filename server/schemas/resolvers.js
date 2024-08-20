@@ -1,6 +1,6 @@
 const { User, Body, Lift, Message, Chatroom } = require('../models');
 const { signToken, AuthError } = require('../utils/auth');
-const s3 = require('../config/awsConfig');
+const {s3, PutObjectCommand, getSignedUrl, DeleteObjectCommand} = require('../config/awsConfig');
 
 const dateScalar = require('./scalars');
 
@@ -222,13 +222,15 @@ const resolvers = {
                 const params = {
                     Bucket: 'tumorido',
                     Key: `pfp/${filename}`,
-                    Expires: 60,
                     ContentType: contentType
                 };
 
                 try {
+                    // Generates a command for putting the object
+                    const command = new PutObjectCommand(params);
+
                     // Generates a presigned URL for uploading an object to the specified bucket
-                    return await s3.getSignedUrlPromise('putObject', params);
+                    return await getSignedUrl(s3, command, { expiresIn: 60 })
                 } catch (err) {
                     console.log(err)
                     throw new Error('Error generating presigned URL');
@@ -250,8 +252,10 @@ const resolvers = {
                         const key = user.pfp.split('/').slice(-1)[0];
                         // Sets the params for the s3 deletion
                         const delParams = { Bucket: 'tumorido', Key: `pfp/${key}` }
+                        // Generates a command for deleting the object
+                        const command = new DeleteObjectCommand(delParams);
                         // Makes a request to the s3 bucket to delete the object
-                        await s3.deleteObject(delParams).promise();
+                        await s3.send(command)
 
                     }
 
