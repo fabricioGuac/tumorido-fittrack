@@ -76,10 +76,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
 
-// Virtual to calculate an aproximate of the users age
-userSchema.virtual('age').get(function() {
-    return new Date().getFullYear() - this.birthday.getFullYear();
-})
 
 const User = model('user', userSchema);
 

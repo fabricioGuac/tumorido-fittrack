@@ -13,15 +13,18 @@ const resolvers = {
                 try {
                     const user = await User.findOne({ _id: context.user._id })
                         .populate({ path: 'lift', options: { sort: { date: -1 } } })
-                        .populate({ path: 'body', options: { sort: { date: -1 } } });
+                        .populate({ path: 'body', options: { sort: { date: -1 } } }).lean();
 
                     user.lift = user.lift.map(lift => ({
                         ...lift,
                         totalWeightLifted: lift.sets.reduce((total, set) => total + (set.weight * set.reps), 0).toFixed(2)
                     }))
 
+                    console.log('User data:', JSON.stringify(user, null, 2));
 
-                    return user;
+                    // Manually adds age to the user object
+                    const age = new Date().getFullYear() - new Date(user.birthday).getFullYear();
+                    return { ...user, age };
                 } catch (err) {
                     return `NO GOOD ${err}`;
                 }
@@ -156,7 +159,7 @@ const resolvers = {
             return { token, user }
         },
         // Mutation to introduce body data
-        addBody: async (parent, { weight, bodyFatPercentage}, context) => {
+        addBody: async (parent, { weight, bodyFatPercentage }, context) => {
 
             // If the context does not have an user object throws an autentication error
             if (!context.user) {
