@@ -43,35 +43,6 @@ export default function BodyForm({setView, isFemale, height}) {
         })
     }
 
-    // // Converts functions to parse the imperial system to metric
-    // function heightToCm(height) {
-    //     if (radios.measureUnit === 'cm') {
-    //         return parseFloat(height);
-    //     }
-
-    //     // Splits the input by anything but a number
-    //     const parts = height.trim().split(/\D+/);
-
-
-    //     // Initializes feet and inches
-    //     let feet = 0;
-    //     let inches = 0;
-
-    //     // Determine feet and inches
-    //     if (parts.length === 1) {
-    //         // If only one part assumes it's all feets if it looks like a single number
-    //         return (parseFloat(parts[0]) * 30.48);
-    //     } else {
-    //         feet = parseFloat(parts[0]);
-    //         inches = parseFloat(parts[1]);
-    //     }
-
-    //     // Converts feets and inches to centimeters
-    //     const totalInches = (feet * 12) + inches;
-    //     const heightInCm = totalInches * 2.54;
-
-    //     return heightInCm;
-    // }
 
 
     const inToCm = (measurement) => {
@@ -114,9 +85,6 @@ export default function BodyForm({setView, isFemale, height}) {
         }
 
         // Conditionals to ensure the fields are completed
-        // if(!form.height){
-        //     setErrorMessage('Please make sure to fill your height');
-        // }
         if(!form.weight){
             setErrorMessage('Please make sure to fill your weight');
         }
@@ -174,23 +142,13 @@ export default function BodyForm({setView, isFemale, height}) {
     return (
         <>
             <BodyFormRadio
-                // sex={radios.sex}
                 measureUnit={radios.measureUnit}
                 massUnit={radios.massUnit}
                 handleRadioChange={handleRadioChange}
             />
             <div className='container'>
                 <form onSubmit={handleSubmit}>
-                    {/* <label htmlFor="height" className="form-label">Height</label>
-                    <input
-                        type='text'
-                        name='height'
-                        id='height'
-                        value={form.height}
-                        onChange={handleInputChange}
-                        placeholder='Height'
-                        className='form-control'
-                    /> */}
+
                     <label htmlFor="weight" className="form-label">Weight</label>
                     <input
                         type='text'

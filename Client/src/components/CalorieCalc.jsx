@@ -2,12 +2,10 @@ import { useState } from "react";
 
 import FfmiScoreTable from "./FfmiScoreTable";
 
-export default function CalorieCalc({ latestData, latestFFMI, height }) {
+export default function CalorieCalc({ latestData, latestFFMI, height, isFemale, age, }) {
 
-    // Sets the state vriables
-    const [gender, setGender] = useState('Male');
+    // Sets the state variables
     const [activityLevel, setActivityLevele] = useState('moderate');
-    const [age, setAge] = useState(18);
     const [calMacCalcData, setcalMacCalcData] = useState(null);
 
     //Creates two objects to store the respective data based on the activity level
@@ -29,7 +27,7 @@ export default function CalorieCalc({ latestData, latestFFMI, height }) {
 
 
         // Calculates the basic metabolic rate
-        const BMR = gender === 'Male' ? 66.47 + (13.75 * latestData.weight) + (5.003 * height) - (6.755 * age) : 655.1 + (9.563 * latestData.weight) + (1.850 * height) - (4.676 * age);
+        const BMR = isFemale ?  655.1 + (9.563 * latestData.weight) + (1.850 * height) - (4.676 * age) : 66.47 + (13.75 * latestData.weight) + (5.003 * height) - (6.755 * age);
 
         // Multiply the basic metabolic rate by the respective activity multiplier to get the total daily energy expenditure
         const TDEE = BMR * activityMultipliers[activityLevel];
@@ -76,33 +74,6 @@ export default function CalorieCalc({ latestData, latestFFMI, height }) {
                     </div>
 
                     <form onSubmit={CaloMacCalc} className="form">
-                        <label htmlFor="age">Introduce your age:</label>
-                        <input className="num-input" type="number" name="age" id="age" min="18" max="120" value={age} onChange={(e) => setAge(e.target.value)} />
-
-                        <div>
-                            <label>
-                                <input
-                                    type="radio"
-                                    value="Male"
-                                    id='male'
-                                    name='sex'
-                                    checked={gender === 'Male'}
-                                    onChange={() => setGender('Male')}
-                                />
-                                Male
-                            </label>
-                            <label className='mx-2'>
-                                <input
-                                    type="radio"
-                                    value="Female"
-                                    id='female'
-                                    name='sex'
-                                    checked={gender === 'Female'}
-                                    onChange={() => setGender('Female')}
-                                />
-                                Female
-                            </label>
-                        </div>
 
                         <div>
                             <label htmlFor="activityLevel">Select your activity level</label>
@@ -133,7 +104,7 @@ export default function CalorieCalc({ latestData, latestFFMI, height }) {
             </div>
 
             <div className="ffmi-table">
-                <FfmiScoreTable FFMI={latestFFMI} Bfp={latestData.bodyFatPercentage} gender={gender} />
+                <FfmiScoreTable FFMI={latestFFMI} Bfp={latestData.bodyFatPercentage} gender={isFemale ? "Female" : "Male"} />
             </div>
         </>
     )

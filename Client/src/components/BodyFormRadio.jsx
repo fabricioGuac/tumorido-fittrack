@@ -1,35 +1,11 @@
-import { useState } from 'react';
 
 
 
-export default function BodyFormRadio({ sex, measureUnit, massUnit, handleRadioChange }) {
+export default function BodyFormRadio({ measureUnit, massUnit, handleRadioChange }) {
 
     return (
         <>
-            {/* <div className='radio-group'>
-                <label>
-                    <input
-                        type="radio"
-                        value="Male"
-                        id='male'
-                        name='sex'
-                        checked={sex === 'Male'}
-                        onChange={handleRadioChange}
-                    />
-                    Male
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        value="Female"
-                        id='female'
-                        name='sex'
-                        checked={sex === 'Female'}
-                        onChange={handleRadioChange}
-                    />
-                    Female
-                </label>
-            </div> */}
+
             <div className='radio-group'>
                 <label >
                     <input
