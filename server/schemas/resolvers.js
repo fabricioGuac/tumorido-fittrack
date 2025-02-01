@@ -20,7 +20,6 @@ const resolvers = {
                         totalWeightLifted: lift.sets.reduce((total, set) => total + (set.weight * set.reps), 0).toFixed(2)
                     }))
 
-                    console.log('User data:', JSON.stringify(user, null, 2));
 
                     // Manually adds age to the user object
                     const age = new Date().getFullYear() - new Date(user.birthday).getFullYear();

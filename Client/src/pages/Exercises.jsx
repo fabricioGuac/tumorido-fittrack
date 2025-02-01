@@ -19,7 +19,7 @@ export default function Exercises() {
     const [getExercisesByName, { loading: nameLoading, data: nameData }] = useLazyQuery(GET_EXERCISE_BY_NAME);
 
 
-    const muscles = ['Chest', 'Quadriceps', 'Hamstrings', 'Back', 'Shoulders', 'Biceps', 'Triceps'];
+    const muscles = ['Chest', 'Quadriceps', 'Hamstrings', 'Shoulders', 'Biceps', 'Triceps'];
 
     // When activeMucle state changes perform the query
     useEffect(() => {

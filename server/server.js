@@ -49,12 +49,13 @@ const apolloServerStarter = async () => {
         context:authMiddleware,
     }));
 
-    // Sets client/build as static assets in production
+    // Sets static assets in production
     if (process.env.NODE_ENV === 'production') {
-        app.use(express.static(path.join(__dirname, '../Client/dist')));
+
+        app.use(express.static(path.join(__dirname, 'dist')));
 
         app.get('*', (req, res) => {
-            res.sendFile(path.join(__dirname, '../Client/dist/index.html'));
+            res.sendFile(path.join(__dirname, 'dist/index.html'));
         });
     }
 
